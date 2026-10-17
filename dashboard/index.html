@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WARROOM 3D • Sugarcane Harvest Command Center</title>
+<style>
+:root{font-family:system-ui,"Noto Sans Thai",Tahoma,sans-serif;color:#e8f1ef;background:#071019;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 65% -10%,#26483c 0%,#081421 42%,#071019 90%)}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px max(24px,4vw);border-bottom:1px solid #32544e66;gap:12px;flex-wrap:wrap}
+.brand{font-size:23px;font-weight:850;letter-spacing:2px;color:#e6d19d}.brand small{display:block;font-size:10px;letter-spacing:3px;color:#81c8b9;margin-top:3px}.back{color:#a5e4d5;text-decoration:none;padding:10px 15px;border:1px solid #6d9a9066;border-radius:12px}
+main{max-width:1480px;margin:auto;padding:24px max(16px,3vw) 60px}h1{font-size:clamp(23px,3vw,35px);margin:6px 0}.sub{color:#95b8b1;font-size:13px;margin-bottom:24px}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(140px,1fr));gap:13px;margin-bottom:19px}
+.card,.scene,.panel{background:linear-gradient(145deg,#20343cbb,#0e1c29db);border:1px solid #739c9270;border-radius:19px;box-shadow:0 16px 38px #0005;backdrop-filter:blur(14px)}
+.card{padding:19px}.card .label{color:#9cbcb4;font-size:12px}.card strong{display:block;font-size:clamp(22px,2.5vw,32px);margin-top:8px;color:#ecf4f2}.card em{font-size:11px;color:#deb971;font-style:normal}
+.scene{padding:17px;margin-bottom:18px}.scene h2,.panel h2{font-size:18px;margin:0 0 7px}.scene .muted{color:#99b9b1;font-size:12px;margin-bottom:12px}
+.stage{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(#122d38,#203e3b);height:450px;border:1px solid #486d65}
+canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}.hud{position:absolute;top:16px;left:16px;color:#c0f6d8;background:#091c22cc;border:1px solid #7a9d8259;border-radius:50px;padding:8px 13px;font-size:11px;pointer-events:none}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:13px}
+button,select{background:#1a3740;color:#eef6e9;border:1px solid #769b87;border-radius:10px;padding:10px 14px;cursor:pointer}
+button:hover{border-color:#f0d27b}.note{font-size:12px;color:#a8c0b8;margin-left:auto}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{padding:20px}.bar{display:grid;grid-template-columns:100px 1fr 95px;gap:12px;align-items:center;margin:16px 0;font-size:12px}
+.track{height:11px;border-radius:14px;background:#273c42;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#4bab8c,#edcb6b);border-radius:14px}
+small.notice{display:block;color:#c7b58b;font-size:11px;line-height:1.8;margin-top:18px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom{grid-template-columns:1fr}.stage{height:350px}}@media(max-width:520px){.kpis{grid-template-columns:1fr 1fr}.card{padding:12px}.card strong{font-size:20px}.bar{grid-template-columns:65px 1fr 85px;gap:8px}}
+</style></head><body>
+<header><div class="brand">WARROOM <small>HARVEST INTELLIGENCE · 3D SIMULATOR</small></div><a class="back" href="../">← ระบบติดตามรถตัดเดิม</a></header>
+<main><h1>ศูนย์วิเคราะห์และจำลองการเก็บเกี่ยวอ้อย</h1><p class="sub">DARK LUXURY GLASS · JOHN DEERE–INSPIRED HARVESTER · ข้อมูลสรุปฤดูการผลิต 2568/69 จาก Sheet2</p>
+<div class="kpis">
+<div class="card"><div class="label">รถตัดทั้งหมด</div><strong>254</strong><em>คัน</em></div>
+<div class="card"><div class="label">รถตัดที่ใช้งาน</div><strong>238</strong><em>คัน</em></div>
+<div class="card"><div class="label">พื้นที่ตัดสุทธิ</div><strong>274,482.80</strong><em>ไร่</em></div>
+<div class="card"><div class="label">ปริมาณอ้อย</div><strong>2,415,654.89</strong><em>ตัน</em></div>
+<div class="card"><div class="label">ผลผลิตเฉลี่ย</div><strong>8.80</strong><em>ตัน/ไร่</em></div>
+</div>
+<section class="scene"><h2>ฉากปฏิบัติการรถตัดอ้อยสามมิติ</h2><div class="muted">โมเดลจำลองเชิงโครงสร้างด้วย Canvas 3D projection · ลากเมาส์เพื่อหมุนมุมมอง · เลื่อนล้อเมาส์เพื่อซูม</div>
+<div class="stage"><canvas id="world" aria-label="ฉากรถตัดอ้อยสีเขียว-เหลืองขับและหมุนหัวตัดในไร่อ้อย"></canvas><div class="hud" id="hud">● DEMO SIMULATION RUNNING</div></div>
+<div class="controls"><button id="pause">⏸ หยุดชั่วคราว</button><button id="reset">↻ เริ่มใหม่</button><button id="camera">◉ เปลี่ยนมุมกล้อง</button><label>ความเร็ว <select id="speed"><option value=".5">ช้า</option><option value="1" selected>ปกติ</option><option value="1.7">เร็ว</option></select></label><span class="note">ไม่ใช่ข้อมูล GPS หรือสถานะสดจากรถจริง</span></div></section>
+<div class="bottom"><section class="panel"><h2>ปริมาณอ้อยแยกตามกลุ่มรถ</h2><div id="group-bars"></div></section>
+<section class="panel"><h2>สรุปการปฏิบัติงาน</h2><p style="color:#b9d1c8;line-height:1.95;font-size:14px">แดชบอร์ดนี้สร้างแยกจากระบบติดตามรถตัดเดิม เพื่อทดลองการแสดงผลรถเก็บเกี่ยว 3D บน GitHub Pages โดยไม่เปลี่ยนหน้าแรกของเว็บไซต์</p><p style="color:#b9d1c8;line-height:1.95;font-size:14px">ขั้นต่อไปสามารถเปลี่ยนโมเดลจำลองเป็นไฟล์ <strong>.glb</strong> พร้อม Three.js และต่อระบบข้อมูลรายคันได้</p><small class="notice">หมายเหตุ: โมเดลเป็นงานจำลองที่ได้แรงบันดาลใจจากรถตัดอ้อยสีเขียว-เหลือง ไม่ใช่โมเดลรับรองจาก John Deere และยังไม่ใช่ Digital Twin ที่เชื่อมกับเครื่องจักรจริง</small></section></div>
+</main>
+<script>
+const groups=[['โรงงาน',852558.91],['ชาวไร่',1411630.08],['ผู้รับเหมา',127149.15],['พันธมิตร',24316.75]];
+document.getElementById('group-bars').innerHTML=groups.map(([name,num])=>'<div class="bar"><span>'+name+'</span><div class="track"><div class="fill" style="width:'+(num/1411630.08*100)+'%"></div></div><strong style="text-align:right">'+num.toLocaleString('th-TH',{maximumFractionDigits:0})+' ตัน</strong></div>').join('');
+(()=>{
+const canvas=document.getElementById('world'),c=canvas.getContext('2d');let W=1000,H=450,dpr=1,t=0,last=0,paused=false,speed=1,ang=.66,elev=.48,dist=14,drag=null;
+let stalks=[];const V=(x,y,z)=>({x,y,z}),sub=(a,b)=>V(a.x-b.x,a.y-b.y,a.z-b.z),dot=(a,b)=>a.x*b.x+a.y*b.y+a.z*b.z,cross=(a,b)=>V(a.y*b.z-a.z*b.y,a.z*b.x-a.x*b.z),norm=a=>{let l=Math.hypot(a.x,a.y,a.z)||1;return V(a.x/l,a.y/l,a.z/l)},clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function reset(){t=0;stalks=[];for(let k=0;k<6;k++)for(let i=0;i<20;i++)stalks.push({x:-11+i*1.1,z:-4.9+k*1.86,h:1.55+Math.random()*.7,cut:false,phase:Math.random()*6})};reset();
+function resize(){let r=canvas.getBoundingClientRect();W=r.width;H=r.height;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);c.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();
+function project(p){const eye=V(Math.cos(ang)*dist*Math.cos(elev),dist*Math.sin(elev)+2.2,Math.sin(ang)*dist*Math.cos(elev)),f=norm(sub(V(0,1,0),eye)),rt=norm(cross(f,V(0,1,0))),up=cross(rt,f),q=sub(p,eye),d=dot(q,f),s=Math.min(W*.84,H*1.7)/(Math.max(1,d)*.86);return {x:W*.5+dot(q,rt)*s,y:H*.58-dot(q,up)*s,d,s}}
+let polys=[];function poly(ps,color){const pts=ps.map(project);if(pts.some(p=>p.d<.1))return;polys.push({pts,color,depth:pts.reduce((a,b)=>a+b.d,0)/pts.length})}
+function line(a,b,color,lw=1.5){const p=project(a),q=project(b);if(p.d<.1||q.d<.1)return;polys.push({pts:[p,q],color,lw,depth:(p.d+q.d)/2,line:true})}
+function box(x,y,z,sx,sy,sz,colors){let a=x-sx/2,b=x+sx/2,u=z-sz/2,v=z+sz/2,j=y,k=y+sy;poly([V(a,j,u),V(b,j,u),V(b,j,v),V(a,j,v)],colors[0]);poly([V(a,k,u),V(b,k,u),V(b,k,v),V(a,k,v)],colors[1]);poly([V(a,j,u),V(b,j,u),V(b,k,u),V(a,k,u)],colors[2]);poly([V(a,j,v),V(b,j,v),V(b,k,v),V(a,k,v)],colors[3]);poly([V(a,j,u),V(a,j,v),V(a,k,v),V(a,k,u)],colors[4]);poly([V(b,j,u),V(b,k,u),V(b,k,v),V(b,j,v)],colors[5])}
+function draw(){const sky=c.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#0b2837');sky.addColorStop(.65,'#244e4a');sky.addColorStop(1,'#0a1d21');c.fillStyle=sky;c.fillRect(0,0,W,H);polys=[];
+poly([V(-18,-.1,-12),V(18,-.1,-12),V(18,-.1,12),V(-18,-.1,12)],'#123629');
+for(let z=-5;z<=6;z+=1.86){poly([V(-13,-.09,z-.42),V(13,-.09,z-.42),V(13,-.09,z+.42),V(-13,-.09,z+.42)],'#285139');line(V(-13,0,z),V(13,0,z),'#46734b')}
+let x=-1.1+((t*.46)%3.2),z=-1.25;
+for(const s of stalks){if(s.x<x+2.9&&s.x>x-2.2&&Math.abs(s.z-z)<1.32)s.cut=true;const h=s.cut?.22:s.h;line(V(s.x,0,s.z),V(s.x+Math.sin(t*2+s.phase)*.10,h,s.z),'#c3c372',s.cut?1.2:2.6);if(!s.cut){line(V(s.x,h*.8,s.z),V(s.x+.52,h+0.3,s.z+.30),'#8fc77d',2);line(V(s.x,h*.72,s.z),V(s.x-.50,h+.1,s.z-.27),'#5cad71',2)}}
+poly([V(x-3.5,-.05,z-1.35),V(x+3.4,-.05,z-1.35),V(x+3.4,-.05,z+1.35),V(x-3.5,-.05,z+1.35)],'#0b1d16');
+for(let dz of [-1.05,1.05]){box(x,0,z+dz,4.9,.46,.42,['#18222a','#29353d','#17232a','#253036','#182128','#253840']);for(let wx of [-1.8,-1,-.2,.65,1.55])box(x+wx,.08,z+dz,.54,.5,.5,['#181f23','#536068','#1c252c','#333f45','#273139','#37434b'])}
+box(x,.51,z,4.8,1.15,2,['#174328','#3ca653','#20562f','#2f8645','#1c542b','#318f48']);
+box(x-.85,1.63,z-.35,2.5,.86,1.4,['#1a492d','#3c9455','#235b32','#318b49','#205a32','#30994f']);
+box(x+1.08,1.65,z,1.72,1.46,1.5,['#102638','#4f9bb0','#163d55','#123448','#1a4255','#164b63']);
+box(x+1.02,3.12,z,2.04,.19,1.66,['#15472d','#56a65b','#1c532d','#30884c','#1b5b30','#2c904d']);
+box(x+1.2,1.47,z,2.05,.19,1.8,['#bf9b39','#f8d873','#b58c2a','#d2a947','#a98730','#d6b149']);
+line(V(x-2.3,1.5,z+1.0),V(x+2.35,1.5,z+1.0),'#f5d36d',4);
+line(V(x-2.25,1.75,z-1),V(x-3.6,3.15,z-1.7),'#e0b94b',10);
+line(V(x-2.25,1.75,z-1),V(x-3.6,3.15,z-1.7),'#327e4b',6);
+line(V(x-3.6,3.15,z-1.7),V(x-4.3,2.95,z-1.85),'#d9bb51',8);
+box(x+2.15,.3,z,.90,.55,2.8,['#285f36','#3ea35b','#1b6339','#2f894a','#1f5531','#37a357']);
+for(let dz of [-1,-.5,0,.5,1]){poly([V(x+2.5,.16,z+dz),V(x+3.48,.12,z+dz),V(x+2.92,.75,z+dz),V(x+2.4,.69,z+dz)],'#e5bd51');let a=t*9+dz*3;line(V(x+2.96,.55,z+dz),V(x+2.96,.55+Math.sin(a)*.42,z+dz+Math.cos(a)*.42),'#f7e397',2)}
+polys.sort((a,b)=>b.depth-a.depth);
+for(const p of polys){c.beginPath();c.moveTo(p.pts[0].x,p.pts[0].y);for(let i=1;i<p.pts.length;i++)c.lineTo(p.pts[i].x,p.pts[i].y);if(p.line){c.strokeStyle=p.color;c.lineWidth=p.lw;c.lineCap='round';c.stroke()}else{c.closePath();c.fillStyle=p.color;c.fill()}}
+c.fillStyle='#bde9d7';c.font='12px system-ui';c.fillText('3D PROTOTYPE · OFFLINE RENDERING · CAMERA '+Math.round(ang*180/Math.PI)+'°',18,H-18)}
+function loop(ms){let dt=Math.min(.05,(ms-last)/1000)||0;last=ms;if(!paused){t+=dt*speed;if(t>22)reset()}draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
+canvas.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,a:ang,e:elev};canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(drag){ang=drag.a+(e.clientX-drag.x)*.008;elev=clamp(drag.e+(drag.y-e.clientY)*.005,.14,1.25)}});canvas.addEventListener('pointerup',()=>drag=null);canvas.addEventListener('pointercancel',()=>drag=null);canvas.addEventListener('wheel',e=>{e.preventDefault();dist=clamp(dist+Math.sign(e.deltaY),9,27)},{passive:false});
+document.getElementById('pause').onclick=e=>{paused=!paused;e.target.textContent=paused?'▶ เล่นต่อ':'⏸ หยุดชั่วคราว';document.getElementById('hud').textContent=paused?'◉ DEMO SIMULATION PAUSED':'● DEMO SIMULATION RUNNING'};
+document.getElementById('reset').onclick=reset;document.getElementById('camera').onclick=()=>{ang+=Math.PI/2;elev=.48};document.getElementById('speed').onchange=e=>speed=Number(e.target.value);
+})();
+</script></body></html>
