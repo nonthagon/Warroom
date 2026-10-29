@@ -364,13 +364,13 @@ body.nav-open{overflow:hidden}
   <section class="panel glass"><div class="panel-head"><h3>รายการติดตามรายคัน</h3><span class="pill blue" id="followCount"></span></div><div class="follow-list" id="followList"></div></section>
 </div>
 <div class="view-pane" id="view-zones" data-view="zones" hidden>
-  <div class="section-intro"><h3>ภาพรวมรายเขต</h3><span class="pill blue">เขต 1 – 4</span></div>
+  <div class="section-intro"><h3>ติดตามรถที่มีปัญหารายเขต</h3><span class="pill blue">เขต 1 – 4</span></div>
   <div class="zone-mode-switch" role="tablist" aria-label="มุมมองรายเขต">
-    <button type="button" class="zone-mode-btn is-selected" id="zoneCompareTab" data-zone-mode="compare" role="tab" aria-selected="true" aria-controls="zoneCards">เปรียบเทียบผลงาน</button>
-    <button type="button" class="zone-mode-btn" id="zoneTrackTab" data-zone-mode="tracking" role="tab" aria-selected="false" aria-controls="zoneTracking">ติดตามรถที่มีปัญหา</button>
+    <button type="button" class="zone-mode-btn is-selected" id="zoneTrackTab" data-zone-mode="tracking" role="tab" aria-selected="true" aria-controls="zoneTracking">ติดตามรถที่มีปัญหา</button>
+    <button type="button" class="zone-mode-btn" id="zoneCompareTab" data-zone-mode="compare" role="tab" aria-selected="false" aria-controls="zoneCards">เปรียบเทียบผลงาน</button>
   </div>
-  <div id="zoneCards" class="zone-compare-view" role="tabpanel" aria-labelledby="zoneCompareTab"></div>
-  <div id="zoneTracking" class="zone-tracking-view" role="tabpanel" aria-labelledby="zoneTrackTab" hidden></div>
+  <div id="zoneTracking" class="zone-tracking-view" role="tabpanel" aria-labelledby="zoneTrackTab"></div>
+  <div id="zoneCards" class="zone-compare-view" role="tabpanel" aria-labelledby="zoneCompareTab" hidden></div>
 </div>
 <div class="view-pane" id="view-fleet" data-view="fleet" hidden>
 <section class="panel glass" style="margin-bottom:20px"><div class="panel-head"><h3>รถตัดรายคัน</h3><span class="pill blue" id="resultCount"></span></div><div class="table-scroller"><table><thead><tr><th>รหัสรถ</th><th>ประเภท / เขต</th><th>สถานะวันนี้</th><th>หยุดต่อเนื่อง</th><th>ตัน (14 วัน)</th><th>สาเหตุ / การติดตาม</th><th>ดำเนินการ</th></tr></thead><tbody id="tableBody"></tbody></table></div></section>
@@ -424,7 +424,7 @@ function renderTrend(){
   root.innerHTML=`<div class="stop-line-canvas"><svg viewBox="0 0 960 214" role="img" aria-label="แนวโน้มจำนวนรถหยุดตัด 14 วัน: ${description}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="stopLineGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f2a3ae"/><stop offset="50%" stop-color="#e36d7f"/><stop offset="100%" stop-color="#c95168"/></linearGradient></defs><path d="${path}" fill="none" stroke="url(#stopLineGradient)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" class="stop-line-path"/></svg></div><div class="stopline-dates" aria-hidden="true">${labels}</div>`;
 }
 function renderFollow(){const arr=filter().filter(r=>r.status==='stop').sort((a,b)=>b.stopDays-a.stopDays);const unknown=arr.filter(r=>r.reason==='ยังไม่สอบถาม');const contacted=arr.filter(r=>r.follow!=='ยังไม่ดำเนินการ');const long=arr.filter(r=>r.stopDays>=3);$('#sideUrgentCount').textContent=long.length;$('#followSummary').innerHTML=pulseMarkup('หยุด ≥ 3 วัน',long.length,'คัน','warning')+pulseMarkup('ยังไม่ทราบสาเหตุ',unknown.length,'คัน','amber')+pulseMarkup('มีการติดตามแล้ว',contacted.length,'คัน','good');$('#followCount').textContent=arr.length+' คัน';$('#followList').innerHTML=arr.map(r=>`<div class="follow-item ${r.stopDays>=3?'is-urgent':''}"><span class="follow-days">${r.stopDays}<small>วันหยุด</small></span><div><strong>${r.id}</strong><small>เขต ${r.zone} · ${r.type==='C'?'บริษัท':r.type==='Q'?'ชาวไร่':'ผู้รับเหมา'}</small></div><div class="follow-reason"><strong>${safe(r.reason)}</strong><small>${safe(r.follow)}</small></div><button type="button" class="rowaction" data-id="${r.id}">ติดตาม ›</button></div>`).join('')||'<div class="empty">ไม่มีรถหยุดตัดตามเงื่อนไขที่เลือก</div>'}
-let zoneMode='compare';
+let zoneMode='tracking';
 function setZoneMode(mode){
   zoneMode=mode==='tracking'?'tracking':'compare';
   document.querySelectorAll('[data-zone-mode]').forEach(b=>{
@@ -468,7 +468,7 @@ $('#quickCalendar').addEventListener('click',()=>activateView(currentView==='cal
 document.querySelectorAll('[data-zone-mode]').forEach(b=>b.addEventListener('click',()=>setZoneMode(b.dataset.zoneMode)));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go-zone]');if(!b)return;$('#zoneFilter').value=b.dataset.goZone;syncVehicleOptions();rerender();activateView('fleet')});
 
-syncVehicleOptions();rerender();activateView(location.hash.replace('#','')||'overview');
+syncVehicleOptions();rerender();setZoneMode('tracking');activateView(location.hash.replace('#','')||'overview');
 })();
 </script>
 </body></html>
