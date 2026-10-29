@@ -349,6 +349,9 @@ body.nav-open{overflow:hidden}
 .zone-return-badge{color:#238574;background:#e2f7f1;border:1px solid #cbeee3}
 .zone-empty-badge{color:#748ea0;background:#eff4f8;border:1px solid #e2eaf0}
 @media(max-width:670px){.zone-track-row{grid-template-columns:54px minmax(0,1fr) 70px;gap:8px}.zone-track-reason{grid-column:2/3;grid-row:1}.zone-stop-days{grid-column:1;grid-row:2}.zone-track-row .rowaction{grid-column:3;grid-row:1}.zone-track-details{grid-column:1/-1;grid-row:3;grid-template-columns:1fr;gap:7px;margin-top:4px}.zone-last-contact,.zone-planned-return{padding:10px 11px}.zone-track-reason strong,.zone-track-reason small{white-space:normal;overflow-wrap:anywhere}}
+
+/* Keep the expanded follow-up form scrollable on mobile */
+#reasonDialog{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
 </style>
 </head>
 <body>
@@ -456,7 +459,7 @@ function setZoneMode(mode){
   $('#zoneTracking').hidden=zoneMode!=='tracking';
 }
 function bangkokDay(){return new Date(Date.now()+7*60*60*1000).toISOString().slice(0,10)}
-function isReturnOverdue(r){return r.status==='stop'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(r.returnDate||'')&&r.returnDate<bangkokDay()}
+function isReturnOverdue(r){return r.status==='stop'&&/^\d{4}-\d{2}-\d{2}$/.test(r.returnDate||'')&&r.returnDate<bangkokDay()}
 function showContactDate(s){if(!s)return 'ยังไม่บันทึก';const d=new Date(s+':00+07:00');return Number.isNaN(d.getTime())?'ยังไม่บันทึก':d.toLocaleString('th-TH',{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Bangkok'})+' น.'}
 function showReturnDate(s){if(!s)return 'ยังไม่ระบุ';const d=new Date(s+'T12:00:00+07:00');return Number.isNaN(d.getTime())?'ยังไม่ระบุ':d.toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Bangkok'})}
 function renderZones(){
