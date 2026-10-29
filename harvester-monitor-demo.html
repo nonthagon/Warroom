@@ -352,6 +352,23 @@ body.nav-open{overflow:hidden}
 
 /* Keep the expanded follow-up form scrollable on mobile */
 #reasonDialog{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
+
+/* Executive daily close summary — small, left-aligned, visible after 18:00 Bangkok time */
+.closing-summary{display:block;width:fit-content;max-width:100%;min-width:min(100%,390px);padding:13px 18px 14px;margin:0 0 16px;border-radius:13px;background:linear-gradient(120deg,#ffffff,#f3faff);border:1px solid #d9eaf4;box-shadow:0 8px 19px rgba(35,107,149,.055);border-left:3px solid #90bdd4}
+.closing-summary[hidden]{display:none!important}
+.closing-summary.rise{border-left-color:#e38191}
+.closing-summary.fall{border-left-color:#5bbdab}
+.closing-summary-label{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:11px;font-weight:830;color:#315d77}
+.closing-summary-label small{font-size:9px;color:#829eaf;font-weight:600}
+.closing-led{width:7px;height:7px;border-radius:50%;background:#70b7d8;box-shadow:0 0 7px rgba(77,169,212,.4)}
+.closing-summary.rise .closing-led{background:#d76e81;box-shadow:0 0 7px rgba(217,93,117,.35)}
+.closing-summary.fall .closing-led{background:#34b39a;box-shadow:0 0 7px rgba(45,185,148,.35)}
+.closing-summary p{margin:7px 0 0;color:#476a7e;font-size:13px;line-height:1.5}
+.closing-summary p strong{color:#1c536d;font-size:17px;font-weight:850}
+.closing-change{font-weight:830;color:#4c788a}
+.closing-summary.rise .closing-change{color:#c55364}
+.closing-summary.fall .closing-change{color:#1e927b}
+@media(max-width:670px){.closing-summary{width:100%;min-width:0;padding:12px 14px;margin-bottom:12px}.closing-summary-label{font-size:10px}.closing-summary p{font-size:12px}.closing-summary p strong{font-size:16px}}
 </style>
 </head>
 <body>
@@ -366,7 +383,7 @@ body.nav-open{overflow:hidden}
 <select id="vehicleFilter" aria-label="เลือกรหัสรถ"><option value="all">รถทุกคัน</option></select>
 <select id="statusFilter" aria-label="เลือกสถานะ"><option value="all">ทุกสถานะ</option><option value="stop">หยุดตัด</option><option value="urgent">หยุด ≥ 3 วัน</option><option value="queue">มีคิว</option><option value="weigh">ชั่งแล้ว</option></select>
 <input class="input" type="search" id="search" placeholder="ค้นหารหัสรถ…" aria-label="ค้นหารหัสรถ"></div></section>
-<div class="view-pane is-active" id="view-overview" data-view="overview"><section class="kpis" id="kpis" aria-label="ตัวเลขภาพรวม"></section><div id="pulseMini" class="pulse-mini" aria-label="ความเคลื่อนไหววันนี้"></div>
+<div class="view-pane is-active" id="view-overview" data-view="overview"><section id="closingSummary" class="closing-summary glass" role="status" aria-live="polite" aria-label="สรุปหลังปิดยอด" hidden></section><section class="kpis" id="kpis" aria-label="ตัวเลขภาพรวม"></section><div id="pulseMini" class="pulse-mini" aria-label="ความเคลื่อนไหววันนี้"></div>
 <div class="overview-sections">
 <section class="panel glass overview-type-panel"><div class="panel-head"><div><h3>สถานะตามประเภทรถตัด</h3></div><span class="pill blue" id="typeCount">24 คัน</span></div><div class="type-stack" id="types"></div><div class="legend"><span><i class="dot" style="background:#20a78b"></i>ชั่งแล้ว</span><span><i class="dot" style="background:#e9b557"></i>มีคิว</span><span><i class="dot" style="background:#ee8c94"></i>หยุดตัด</span></div></section>
 <section class="panel glass overview-urgent-panel"><div class="panel-head"><div><h3>รถตัดที่ต้องติดตามก่อน</h3></div><span class="pill red" id="urgentBadge">หยุด ≥ 3 วัน</span></div><div class="urgent-list" id="urgents"></div></section>
@@ -432,6 +449,20 @@ let currentView='overview';
 function setMenuOpen(open){document.body.classList.toggle('nav-open',open);$('#sidebarBackdrop').hidden=!open;$('#mobileMenu').setAttribute('aria-expanded',String(open))}
 function activateView(view){if(!VIEW_TITLES[view])view='overview';currentView=view;document.querySelectorAll('.view-pane').forEach(p=>{const show=p.dataset.view===view;p.hidden=!show;p.classList.toggle('is-active',show)});document.querySelectorAll('.side-link').forEach(b=>{const on=b.dataset.viewTarget===view;b.classList.toggle('active',on);b.setAttribute('aria-current',on?'page':'false')});$('#viewTitle').textContent=VIEW_TITLES[view];$('#quickCalendar').textContent=view==='calendar'?'ดูรถรายคัน':'ปฏิทินรายวัน';setMenuOpen(false);window.scrollTo({top:0,behavior:'instant'});try{history.replaceState(null,'','#'+view)}catch(e){}}
 function pulseStats(arr){const prev=arr.filter(r=>r.hist[r.hist.length-2]==='stop');const stop=arr.filter(r=>r.status==='stop');const justStopped=arr.filter(r=>r.hist[r.hist.length-2]!=='stop'&&r.status==='stop');const resumed=arr.filter(r=>r.hist[r.hist.length-2]==='stop'&&r.status!=='stop');return {stop:stop.length,previous:prev.length,delta:stop.length-prev.length,justStopped,resumed}}
+function renderClosingSummary(){
+  const panel=$('#closingSummary');
+  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date()).map(p=>[p.type,p.value]));
+  const afterClose=Number(parts.hour)>=18;
+  panel.hidden=!afterClose;
+  if(!afterClose){panel.innerHTML='';return}
+  const p=pulseStats(filter());
+  const movement=p.delta>0?'เพิ่มขึ้น '+p.delta+' คัน':p.delta<0?'ลดลง '+Math.abs(p.delta)+' คัน':'เท่ากับเมื่อวาน';
+  const tone=p.delta>0?'rise':p.delta<0?'fall':'steady';
+  const isReportDay=parts.year==='2026'&&parts.month==='10'&&parts.day==='29';
+  const dateNote=isReportDay?'ข้อมูลจำลอง ณ 29 ต.ค. 2569':'ข้อมูลย้อนหลังจำลอง ณ 29 ต.ค. 2569';
+  panel.className='closing-summary glass '+tone;
+  panel.innerHTML=`<div class="closing-summary-label"><span class="closing-led" aria-hidden="true"></span><span>สรุปหลังปิดยอด 18:00 น.</span><small>${dateNote}</small></div><p>รถหยุดตัด <strong>${p.stop} คัน</strong> <span class="closing-change">${movement}</span> จากเมื่อวาน</p>`;
+}
 function pulseMarkup(title,value,note,tone){return `<div class="pulse-card ${tone||''}"><div class="pulse-label">${title}</div><div class="pulse-value"><strong>${value}</strong><small>${note}</small></div></div>`}
 function renderPulse(){const arr=filter(),p=pulseStats(arr);const deltaLabel=p.delta>0?'+'+p.delta:String(p.delta);$('#pulseMini').innerHTML=pulseMarkup('หยุดเพิ่ม / ลดจากเมื่อวาน',deltaLabel,'คัน',p.delta>0?'warning':'good')+pulseMarkup('เพิ่งหยุดวันนี้',p.justStopped.length,'คัน',p.justStopped.length?'warning':'')+pulseMarkup('กลับมาทำงาน',p.resumed.length,'คัน','good');$('#dailyPulseCards').innerHTML=pulseMarkup('หยุดตัดวันนี้',p.stop,'คัน','warning')+pulseMarkup('หยุดเมื่อวาน',p.previous,'คัน','')+pulseMarkup('ผลต่างวันต่อวัน',deltaLabel,'คัน',p.delta>0?'warning':'good')+pulseMarkup('เพิ่งหยุด',p.justStopped.length,'คัน','warning')+pulseMarkup('กลับมาทำงาน',p.resumed.length,'คัน','good')+pulseMarkup('รถในตัวกรอง',arr.length,'คัน','');const list=(items)=>items.map(r=>`<div class="mini-row"><div><b>${r.id}</b><small>เขต ${r.zone} · ${label[r.status]}</small></div><span class="pill ${r.status==='stop'?'red':'green'}">${r.status==='stop'?'หยุดตัด':'กลับมาทำงาน'}</span></div>`).join('')||'<div class="empty">ไม่มีรายการเปลี่ยนสถานะ</div>';$('#newStopCount').textContent=p.justStopped.length+' คัน';$('#resumedCount').textContent=p.resumed.length+' คัน';$('#newStopList').innerHTML=list(p.justStopped);$('#resumedList').innerHTML=list(p.resumed)}
 function renderTrend(){
@@ -479,7 +510,7 @@ function renderZones(){
   }).join('');
 }
 
-function rerender(){renderKpis();renderUrgent();renderTypes();renderTable();renderCalendar();renderPulse();renderTrend();renderFollow();renderZones()}
+function rerender(){renderKpis();renderUrgent();renderTypes();renderTable();renderCalendar();renderPulse();renderTrend();renderFollow();renderZones();renderClosingSummary()}
 function toast(s){const el=$('#toast');el.textContent=s;el.style.display='block';setTimeout(()=>el.style.display='none',2700)}
 function openModal(id){const r=raw.find(x=>x.id===id);if(!r)return;editId=id;$('#modalVehicle').textContent=`รถ ${r.id} · เขต ${r.zone} · หยุด ${r.stopDays} วันต่อเนื่อง`;$('#reasonSelect').value=r.reason==='ยังไม่สอบถาม'?'':r.reason;$('#followSelect').value=r.follow;$('#noteInput').value=r.note||'';$('#contactAtInput').value=r.contactAt||'';$('#contactResultInput').value=r.contactResult||'';$('#returnDateInput').value=r.returnDate||'';$('#reasonDialog').showModal()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(b)openModal(b.dataset.id)});
@@ -496,6 +527,7 @@ document.querySelectorAll('[data-zone-mode]').forEach(b=>b.addEventListener('cli
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go-zone]');if(!b)return;$('#zoneFilter').value=b.dataset.goZone;syncVehicleOptions();rerender();activateView('fleet')});
 
 syncVehicleOptions();rerender();setZoneMode('tracking');activateView(location.hash.replace('#','')||'overview');
+setInterval(renderClosingSummary,60000);
 })();
 </script>
 </body></html>
