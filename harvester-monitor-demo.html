@@ -284,6 +284,53 @@ body.nav-open{overflow:hidden}
 .stopline-dates span:last-child{color:#b95465;font-weight:850}
 @media(max-width:670px){.stop-line-chart{padding:8px 0 4px}.stop-line-canvas,.stopline-dates{min-width:560px}.stop-trend-panel .panel-head h3{font-size:14px}.stopline-dates{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.stop-line-path{transition:none}}
+
+/* Compare zone performance or open zone-specific follow-up; two interactive looks */
+.zone-mode-switch{display:flex;align-items:center;gap:5px;padding:5px;border:1px solid #d8e9f3;border-radius:14px;background:linear-gradient(145deg,#f1f9ff,#eaf5fc);box-shadow:inset 0 1px 3px rgba(29,96,133,.045);max-width:540px;margin-bottom:17px}
+.zone-mode-btn{flex:1;min-height:43px;border:1px solid transparent;border-radius:10px;padding:10px 12px;background:transparent;color:#597c90;font-size:12px;font-weight:800;font-family:inherit;cursor:pointer;transition:background .2s,box-shadow .2s}
+.zone-mode-btn.is-selected{background:linear-gradient(155deg,#fff,#eefaff);color:#167ea4;border-color:#d0e8f4;box-shadow:0 5px 13px rgba(38,107,151,.105),inset 0 1px 0 #fff}
+.zone-mode-btn:hover:not(.is-selected){background:#effaff}
+.zone-compare-view[hidden],.zone-tracking-view[hidden]{display:none!important}
+.zone-compare-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-weight:800;color:#375c75;font-size:13px}
+.zone-compare-panel{padding:9px 12px;margin-bottom:17px}
+.zone-compare-table-scroller{overflow-x:auto;scrollbar-color:#b8d8e8 transparent;scrollbar-width:thin}
+.zone-compare-table{border-collapse:collapse;width:100%;min-width:610px;background:transparent}
+.zone-compare-table th{background:transparent;border-bottom:1px solid #e0ebf3;color:#68869a;font-size:11px;text-align:left;padding:15px 10px}
+.zone-compare-table td{font-size:12px;padding:17px 10px;background:transparent;border-bottom:1px solid #e9f1f6;white-space:nowrap;font-weight:700;color:#385d75}
+.zone-compare-table tbody tr:last-child td{border-bottom:0}
+.zone-compare-table tbody tr:hover td{background:#f3faff}
+.zone-rank-no{font-size:10px;color:#8aaab9;margin-right:9px;font-weight:800}
+.zone-table-name{font-size:13px;color:#1a5474}
+.zone-compare-table .zone-good{color:#288576}
+.zone-compare-table .zone-danger{color:#c15c69}
+.zone-ratio{font-size:14px;color:#b65361;font-weight:850}
+.zone-table-action{margin:0;white-space:nowrap}
+.zone-ranking-panel{margin-bottom:16px}
+.zone-ranking-list{display:grid;gap:15px;padding:5px 0}
+.zone-compare-rank{display:grid;grid-template-columns:110px minmax(0,1fr) 65px;gap:13px;align-items:center;padding:9px 13px;border:1px solid #e5eff5;background:linear-gradient(145deg,#fff,#f7fcff);border-radius:12px}
+.zone-compare-name{display:flex;flex-direction:column;gap:2px}
+.zone-compare-name strong{font-size:13px;color:#1b536f}
+.zone-compare-name small{font-size:10px;color:#7b94a6}
+.zone-track-bar{height:13px;background:#e8f1f7;border:1px solid #e1eaf1;border-radius:9px;overflow:hidden;box-shadow:inset 0 2px 3px rgba(33,95,128,.11)}
+.zone-track-bar>span{display:block;height:100%;background:linear-gradient(180deg,#ffc6cd,#ef8897 42%,#d95f72);border-radius:inherit;box-shadow:inset 0 1px 1px #ffffffa8,0 0 10px #e67b9a46;transition:width .25s ease}
+.zone-compare-pct{text-align:right;color:#c15a68;font-size:14px}
+.zone-tracking-view{display:grid;gap:14px}
+.zone-follow-panel{padding:18px 19px}
+.zone-follow-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.zone-follow-head h3{font-size:17px;color:#1b5274;margin:0}
+.zone-follow-head small{display:block;color:#819aae;margin-top:3px;font-size:10px}
+.zone-follow-counts{display:flex;flex-wrap:wrap;gap:6px}
+.zone-follow-list{display:grid;gap:7px}
+.zone-track-row{display:grid;grid-template-columns:80px minmax(0,1fr) 60px 83px;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e3edf5;border-left:3px solid #e99da7;border-radius:10px;background:linear-gradient(140deg,#fff,#f8fcff);box-shadow:0 4px 10px #216b9f09}
+.zone-track-row strong{color:#315b72;font-size:12px}
+.zone-track-row small{display:block;font-size:10px;color:#859baa;margin-top:3px}
+.zone-stop-days{font-size:12px;font-weight:850;color:#c1606d}
+.zone-track-reason{min-width:0}
+.zone-track-reason strong,.zone-track-reason small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.zone-track-row .rowaction{min-width:0}
+@media(max-width:670px){.zone-mode-switch{width:100%;max-width:none}.zone-mode-btn{font-size:11px;padding:9px 7px}.zone-compare-heading{align-items:flex-start;flex-wrap:wrap;font-size:12px}.zone-compare-panel{padding:4px 8px}.zone-compare-rank{grid-template-columns:86px minmax(0,1fr) 49px;gap:7px;padding:10px 8px}.zone-compare-name strong{font-size:12px}.zone-compare-name small{font-size:9px}.zone-compare-pct{font-size:12px}.zone-follow-panel{padding:15px 13px}.zone-follow-counts .pill{font-size:9px}.zone-track-row{grid-template-columns:47px minmax(0,1fr) 52px;gap:8px}.zone-track-reason{grid-column:2 / 4;grid-row:2}.zone-track-row .rowaction{grid-row:1;grid-column:3}.zone-stop-days{grid-column:1;grid-row:2}.zone-track-row{padding:10px}}
+@media(prefers-reduced-motion:reduce){.zone-mode-btn,.zone-track-bar>span{transition:none}}
+
 </style>
 </head>
 <body>
@@ -318,7 +365,12 @@ body.nav-open{overflow:hidden}
 </div>
 <div class="view-pane" id="view-zones" data-view="zones" hidden>
   <div class="section-intro"><h3>ภาพรวมรายเขต</h3><span class="pill blue">เขต 1 – 4</span></div>
-  <div class="zone-cards" id="zoneCards"></div>
+  <div class="zone-mode-switch" role="tablist" aria-label="มุมมองรายเขต">
+    <button type="button" class="zone-mode-btn is-selected" id="zoneCompareTab" data-zone-mode="compare" role="tab" aria-selected="true" aria-controls="zoneCards">เปรียบเทียบผลงาน</button>
+    <button type="button" class="zone-mode-btn" id="zoneTrackTab" data-zone-mode="tracking" role="tab" aria-selected="false" aria-controls="zoneTracking">ติดตามรถที่มีปัญหา</button>
+  </div>
+  <div id="zoneCards" class="zone-compare-view" role="tabpanel" aria-labelledby="zoneCompareTab"></div>
+  <div id="zoneTracking" class="zone-tracking-view" role="tabpanel" aria-labelledby="zoneTrackTab" hidden></div>
 </div>
 <div class="view-pane" id="view-fleet" data-view="fleet" hidden>
 <section class="panel glass" style="margin-bottom:20px"><div class="panel-head"><h3>รถตัดรายคัน</h3><span class="pill blue" id="resultCount"></span></div><div class="table-scroller"><table><thead><tr><th>รหัสรถ</th><th>ประเภท / เขต</th><th>สถานะวันนี้</th><th>หยุดต่อเนื่อง</th><th>ตัน (14 วัน)</th><th>สาเหตุ / การติดตาม</th><th>ดำเนินการ</th></tr></thead><tbody id="tableBody"></tbody></table></div></section>
@@ -372,7 +424,33 @@ function renderTrend(){
   root.innerHTML=`<div class="stop-line-canvas"><svg viewBox="0 0 960 214" role="img" aria-label="แนวโน้มจำนวนรถหยุดตัด 14 วัน: ${description}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="stopLineGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f2a3ae"/><stop offset="50%" stop-color="#e36d7f"/><stop offset="100%" stop-color="#c95168"/></linearGradient></defs><path d="${path}" fill="none" stroke="url(#stopLineGradient)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" class="stop-line-path"/></svg></div><div class="stopline-dates" aria-hidden="true">${labels}</div>`;
 }
 function renderFollow(){const arr=filter().filter(r=>r.status==='stop').sort((a,b)=>b.stopDays-a.stopDays);const unknown=arr.filter(r=>r.reason==='ยังไม่สอบถาม');const contacted=arr.filter(r=>r.follow!=='ยังไม่ดำเนินการ');const long=arr.filter(r=>r.stopDays>=3);$('#sideUrgentCount').textContent=long.length;$('#followSummary').innerHTML=pulseMarkup('หยุด ≥ 3 วัน',long.length,'คัน','warning')+pulseMarkup('ยังไม่ทราบสาเหตุ',unknown.length,'คัน','amber')+pulseMarkup('มีการติดตามแล้ว',contacted.length,'คัน','good');$('#followCount').textContent=arr.length+' คัน';$('#followList').innerHTML=arr.map(r=>`<div class="follow-item ${r.stopDays>=3?'is-urgent':''}"><span class="follow-days">${r.stopDays}<small>วันหยุด</small></span><div><strong>${r.id}</strong><small>เขต ${r.zone} · ${r.type==='C'?'บริษัท':r.type==='Q'?'ชาวไร่':'ผู้รับเหมา'}</small></div><div class="follow-reason"><strong>${safe(r.reason)}</strong><small>${safe(r.follow)}</small></div><button type="button" class="rowaction" data-id="${r.id}">ติดตาม ›</button></div>`).join('')||'<div class="empty">ไม่มีรถหยุดตัดตามเงื่อนไขที่เลือก</div>'}
-function renderZones(){const selected=filter();const zoneFilter=$('#zoneFilter').value;$('#zoneCards').innerHTML=[1,2,3,4].filter(z=>zoneFilter==='all'||Number(zoneFilter)===z).map(z=>{const arr=selected.filter(r=>r.zone===z),total=arr.length,w=arr.filter(r=>r.status==='weigh').length,q=arr.filter(r=>r.status==='queue').length,st=arr.filter(r=>r.status==='stop').length,urgent=arr.filter(r=>r.stopDays>=3).length,t=Math.max(total,1);return `<section class="zone-card"><div class="zone-top"><h4>เขต ${z}</h4><span class="zone-count">รถ ${total} คัน</span></div><div class="zone-numbers"><div><strong>${w+q}</strong><small>ทำงาน</small></div><div class="danger"><strong>${st}</strong><small>หยุดตัด</small></div><div><strong>${urgent}</strong><small>หยุด ≥ 3 วัน</small></div></div><div class="zone-bar"><span class="good" style="width:${w/t*100}%"></span><span class="queue" style="width:${q/t*100}%"></span><span class="stop" style="width:${st/t*100}%"></span></div><button type="button" class="zone-action" data-go-zone="${z}">ดูรถในเขต ${z} ›</button></section>`}).join('')}
+let zoneMode='compare';
+function setZoneMode(mode){
+  zoneMode=mode==='tracking'?'tracking':'compare';
+  document.querySelectorAll('[data-zone-mode]').forEach(b=>{
+    const selected=b.dataset.zoneMode===zoneMode;
+    b.classList.toggle('is-selected',selected);
+    b.setAttribute('aria-selected',String(selected));
+  });
+  $('#zoneCards').hidden=zoneMode!=='compare';
+  $('#zoneTracking').hidden=zoneMode!=='tracking';
+}
+function renderZones(){
+  const selected=filter(), zoneFilter=$('#zoneFilter').value;
+  const rows=[1,2,3,4].filter(z=>zoneFilter==='all'||Number(zoneFilter)===z).map(z=>{
+    const all=selected.filter(r=>r.zone===z),working=all.filter(r=>r.status!=='stop').length;
+    const stopped=all.filter(r=>r.status==='stop').sort((a,b)=>b.stopDays-a.stopDays),urgent=stopped.filter(r=>r.stopDays>=3).length;
+    return {zone:z,all,working,stopped,urgent,ratio:all.length?stopped.length/all.length*100:0};
+  });
+  const rank=rows.slice().sort((a,b)=>b.ratio-a.ratio||b.stopped.length-a.stopped.length||a.zone-b.zone);
+  const tableRows=rank.map((r,i)=>`<tr><td><span class="zone-rank-no">${String(i+1).padStart(2,'0')}</span><b class="zone-table-name">เขต ${r.zone}</b></td><td>${r.all.length}</td><td class="zone-good">${r.working}</td><td class="zone-danger">${r.stopped.length}</td><td class="zone-danger">${r.urgent}</td><td><span class="zone-ratio">${r.ratio.toFixed(1)}%</span></td><td><button class="zone-action zone-table-action" type="button" data-go-zone="${r.zone}">ดูรถ ›</button></td></tr>`).join('');
+  const rankRows=rank.map((r,i)=>`<div class="zone-compare-rank"><div class="zone-compare-name"><strong>เขต ${r.zone}</strong><small>${r.stopped.length} หยุด / ${r.all.length} คัน</small></div><div class="zone-track-bar" aria-label="เขต ${r.zone} หยุด ${r.ratio.toFixed(1)} เปอร์เซ็นต์"><span style="width:${r.ratio}%"></span></div><strong class="zone-compare-pct">${r.ratio.toFixed(1)}%</strong></div>`).join('');
+  $('#zoneCards').innerHTML=`<div class="zone-compare-heading"><span>เปรียบเทียบสัดส่วนรถหยุดตัดของแต่ละเขต</span><span class="pill red">เรียงจากหยุดมากไปน้อย</span></div><section class="panel glass zone-compare-panel"><div class="zone-compare-table-scroller"><table class="zone-compare-table"><thead><tr><th>เขต</th><th>ทั้งหมด</th><th>ทำงาน</th><th>หยุดตัด</th><th>หยุด ≥ 3 วัน</th><th>% หยุด</th><th></th></tr></thead><tbody>${tableRows}</tbody></table></div></section><section class="panel glass zone-ranking-panel"><div class="panel-head"><h3>อันดับเขตที่มีรถหยุดตัด</h3><span class="pill blue">คิดเป็นเปอร์เซ็นต์</span></div><div class="zone-ranking-list">${rankRows}</div></section>`;
+  $('#zoneTracking').innerHTML=rows.map(r=>{
+    const list=r.stopped.map(v=>`<div class="zone-track-row"><div><strong>${v.id}</strong><small>${v.type==='C'?'บริษัท':v.type==='Q'?'ชาวไร่':'ผู้รับเหมา'}</small></div><div class="zone-track-reason"><strong>${safe(v.reason)}</strong><small>${safe(v.follow)}</small></div><span class="zone-stop-days">${v.stopDays} วัน</span><button type="button" class="rowaction" data-id="${v.id}">ติดตาม ›</button></div>`).join('')||'<div class="empty">ไม่พบรถหยุดตัดในเขตนี้</div>';
+    return `<section class="panel glass zone-follow-panel"><div class="zone-follow-head"><div><h3>เขต ${r.zone}</h3><small>รถทั้งหมด ${r.all.length} คัน</small></div><div class="zone-follow-counts"><span class="pill red">หยุด ${r.stopped.length} คัน</span><span class="pill blue">≥ 3 วัน ${r.urgent} คัน</span></div></div><div class="zone-follow-list">${list}</div></section>`;
+  }).join('');
+}
 
 function rerender(){renderKpis();renderUrgent();renderTypes();renderTable();renderCalendar();renderPulse();renderTrend();renderFollow();renderZones()}
 function toast(s){const el=$('#toast');el.textContent=s;el.style.display='block';setTimeout(()=>el.style.display='none',2700)}
@@ -387,6 +465,7 @@ $('#mobileMenu').addEventListener('click',()=>setMenuOpen(!document.body.classLi
 $('#sidebarBackdrop').addEventListener('click',()=>setMenuOpen(false));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenuOpen(false)});
 $('#quickCalendar').addEventListener('click',()=>activateView(currentView==='calendar'?'fleet':'calendar'));
+document.querySelectorAll('[data-zone-mode]').forEach(b=>b.addEventListener('click',()=>setZoneMode(b.dataset.zoneMode)));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go-zone]');if(!b)return;$('#zoneFilter').value=b.dataset.goZone;syncVehicleOptions();rerender();activateView('fleet')});
 
 syncVehicleOptions();rerender();activateView(location.hash.replace('#','')||'overview');
