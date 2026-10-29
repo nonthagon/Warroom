@@ -108,6 +108,57 @@ body:before,body:after{display:none}.wrap{max-width:1500px;padding-top:28px}
 @media(max-width:670px){.bar{height:12px}.type-stack{gap:10px}.type-stack>div{padding:8px}.kpi .kpi-value::after{bottom:-7px}}
 @media(prefers-reduced-motion:reduce){.bar .w,.bar .q,.bar .s{transition:none}}
 
+
+/* Dimensional fleet table + daily status tiles */
+.table-scroller,.timeline{border:1px solid #dceaf3;border-radius:15px;box-shadow:inset 0 1px 3px rgba(24,93,137,.045),0 8px 22px rgba(47,115,155,.035);background:#f7fbfe}
+.table-scroller{overflow-x:auto;scrollbar-color:#b8d8e8 transparent;scrollbar-width:thin}
+.table-scroller table{border-collapse:separate;border-spacing:0 5px;padding:5px 7px 8px;min-width:880px;background:linear-gradient(160deg,#f7fbfe,#f1f8fc)}
+.table-scroller thead th{background:transparent;white-space:nowrap;border:0;color:#54758b;font-size:11px;font-weight:800;padding:13px 14px 10px;letter-spacing:.05px}
+.table-scroller tbody tr{filter:drop-shadow(0 3px 4px rgba(29,92,129,.035));transition:filter .17s ease,transform .17s ease}
+.table-scroller tbody tr td{padding:15px 14px;background:linear-gradient(160deg,#ffffff 0%,#fafeff 100%);border-top:1px solid #e3edf5;border-bottom:1px solid #e3edf5;vertical-align:middle;color:#2b4b60;font-size:12px}
+.table-scroller tbody tr td:first-child{border-left:3px solid #b9d5e7;border-radius:11px 0 0 11px;padding-left:13px}
+.table-scroller tbody tr.fleet-stop td:first-child{border-left-color:#e88b97}
+.table-scroller tbody tr.fleet-queue td:first-child{border-left-color:#e5bf76}
+.table-scroller tbody tr.fleet-weigh td:first-child{border-left-color:#60c8b5}
+.table-scroller tbody tr td:last-child{border-right:1px solid #e3edf5;border-radius:0 11px 11px 0}
+.table-scroller tbody tr:hover{transform:translateY(-2px);filter:drop-shadow(0 6px 10px rgba(41,120,159,.12))}
+.table-scroller tbody tr:hover td{background:linear-gradient(145deg,#fff,#f3faff);border-top-color:#cce4f2;border-bottom-color:#cce4f2}
+.vehicle-id{font-size:14px!important;letter-spacing:.15px;color:#1a516e}
+.tag{position:relative;border-radius:8px;border:1px solid transparent;padding:7px 11px;font-size:11px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 4px 9px rgba(29,105,140,.07);isolation:isolate;overflow:hidden}
+.tag:after{content:"";position:absolute;pointer-events:none;left:5px;right:5px;top:1px;height:42%;border-radius:100%;background:linear-gradient(180deg,rgba(255,255,255,.67),transparent)}
+.tag.weigh{color:#087964;background:linear-gradient(170deg,#f4fffb,#d1f4e9);border-color:#bce6d7;box-shadow:inset 0 1px 0 #fff,0 3px 9px rgba(15,165,126,.12)}
+.tag.queue{color:#9e6817;background:linear-gradient(170deg,#fffdf4,#fff0cf);border-color:#f0dfb7;box-shadow:inset 0 1px 0 #fff,0 3px 9px rgba(202,150,57,.12)}
+.tag.stop{color:#ad4451;background:linear-gradient(170deg,#fff8f8,#ffe0e5);border-color:#f2cfd6;box-shadow:inset 0 1px 0 #fff,0 3px 9px rgba(211,88,104,.12)}
+.stop-count{display:inline-block;color:#b74d59;font-weight:830;font-size:12px;padding:5px 8px;border-radius:7px;background:linear-gradient(145deg,#fff7f7,#ffe9ea);border:1px solid #f7dfe1;box-shadow:0 3px 9px rgba(198,102,114,.08)}
+.ton-number{font-weight:820;color:#255a77;font-size:13px;letter-spacing:.2px}
+.ton-unit{margin-left:4px;font-size:10px;color:#718b9e}
+.action-link{background:linear-gradient(155deg,#f2fbff,#deeff8);color:#126f96;border:1px solid #cce3f0;box-shadow:inset 0 1px 0 #fff,0 3px 8px rgba(35,125,168,.065);transition:box-shadow .18s ease,transform .18s ease}
+.action-link:hover{transform:translateY(-1px);box-shadow:0 5px 12px rgba(35,125,168,.16)}
+/* Calendar: raised glass tiles, glossy light sweep, subtle depth */
+.timeline{overflow-x:auto;scrollbar-color:#b8d8e8 transparent;scrollbar-width:thin}
+.calendar{border-collapse:separate;border-spacing:0;background:#f7fbfe;min-width:1010px}
+.calendar thead th{position:relative;background:linear-gradient(180deg,#edf7fc,#e3f1fa);border-bottom:1px solid #d4e5f1;color:#58788f;font-weight:800;font-size:11px;padding:13px 6px;white-space:nowrap}
+.calendar thead th.latest-date{color:#137ea5;background:linear-gradient(180deg,#dff5ff,#edfaff);border-bottom:2px solid #5eb5d8}
+.calendar tbody td{padding:8px 5px;background:rgba(255,255,255,.94);border-bottom:1px solid #eef3f7;text-align:center}
+.calendar tbody tr:nth-child(even) td{background:#f8fcff}
+.calendar tbody tr:hover td{background:#eef8ff}
+.calendar tbody td.latest-day{background:#edfaff!important}
+.calendar td:first-child,.calendar th:first-child{position:sticky;left:0;z-index:3;box-shadow:3px 0 8px rgba(32,97,133,.08);background:#f5faff;text-align:left;min-width:100px;padding-left:12px}
+.calendar tbody tr:nth-child(even) td:first-child{background:#f5faff}
+.calendar tbody tr:hover td:first-child{background:#eaf5fd}
+.calendar td:first-child b{color:#25526e;font-size:12px;letter-spacing:.15px}
+.cell{display:inline-grid;place-items:center;position:relative;overflow:hidden;width:30px;height:27px;border-radius:7px;border:1px solid rgba(255,255,255,.5);font-size:13px;font-weight:900;line-height:1;transform:translateY(0);transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;isolation:isolate}
+.cell:before{content:"";position:absolute;inset:1px 2px auto 2px;height:48%;border-radius:5px 5px 50% 50%;background:linear-gradient(180deg,rgba(255,255,255,.64),rgba(255,255,255,0));pointer-events:none;z-index:1}
+.cell:after{content:"";position:absolute;left:8px;right:8px;bottom:1px;height:1px;background:rgba(255,255,255,.45);pointer-events:none}
+.cell.weigh{color:#fff;background:linear-gradient(165deg,#8df1d0 0%,#30c9a5 46%,#0f9f84 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,.82),inset 0 -2px 2px rgba(0,94,72,.2),0 3px 6px rgba(20,157,126,.26),0 0 9px rgba(25,192,149,.13)}
+.cell.queue{color:#755016;background:linear-gradient(160deg,#ffebb4 0%,#f5c96b 50%,#dda13b 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,.93),inset 0 -2px 2px rgba(124,81,13,.14),0 3px 6px rgba(201,146,47,.22),0 0 8px rgba(230,174,65,.12)}
+.cell.stop{color:#fff;background:linear-gradient(160deg,#ffbfc6 0%,#f28c9a 45%,#df6174 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,.85),inset 0 -2px 2px rgba(143,39,60,.17),0 3px 6px rgba(210,89,106,.22),0 0 8px rgba(235,109,125,.13)}
+.cell.future{background:linear-gradient(160deg,#f3f8fb,#dce8ef);color:#8ca3b1;border-color:#d4e4ed;box-shadow:inset 0 1px 1px #fff,0 2px 3px rgba(40,80,108,.07)}
+.calendar tbody tr:hover .cell{transform:translateY(-1px);filter:saturate(1.05)}
+.calendar tbody td.latest-day .cell{outline:1px solid rgba(51,156,203,.22);outline-offset:2px}
+@media(max-width:670px){.table-scroller table{min-width:855px;padding:5px}.table-scroller tbody tr td{padding:12px 11px}.calendar{min-width:970px}.cell{width:28px;height:26px}.calendar tbody td{padding:7px 4px}}
+@media(prefers-reduced-motion:reduce){.table-scroller tbody tr,.calendar .cell,.action-link{transition:none}.table-scroller tbody tr:hover,.calendar tbody tr:hover .cell,.action-link:hover{transform:none}}
+
 </style>
 </head>
 <body>
@@ -153,8 +204,8 @@ function renderUrgent(){const arr=filter();const list=arr.filter(x=>x.status==='
 function renderTypes(){const map={C:'รถบริษัท',Q:'รถชาวไร่',S:'รถผู้รับเหมา'};const arr=filter();$('#typeCount').textContent=`${arr.length} คัน`;$('#types').innerHTML=Object.entries(map).filter(([k])=>$('#typeFilter').value==='all'||$('#typeFilter').value===k).map(([k,v])=>{let a=arr.filter(x=>x.type===k),w=a.filter(x=>x.status==='weigh').length,q=a.filter(x=>x.status==='queue').length,st=a.filter(x=>x.status==='stop').length;let n=Math.max(a.length,1);return `<div><div class="type-line"><span><strong>${k}</strong> · ${v}</span><span style="color:#6b8492">${w+q} ทำงาน / <b style="color:#be4b54">${st} หยุด</b></span></div><div class="bar"><span class="w" style="width:${w/n*100}%"></span><span class="q" style="width:${q/n*100}%"></span><span class="s" style="width:${st/n*100}%"></span></div></div>`}).join('')}
 function syncVehicleOptions(){const el=$('#vehicleFilter');const old=el.value;const zone=$('#zoneFilter').value,type=$('#typeFilter').value;const available=raw.filter(r=>(zone==='all'||String(r.zone)===zone)&&(type==='all'||r.type===type)).sort((a,b)=>a.id.localeCompare(b.id));el.innerHTML='<option value="all">รถทุกคัน</option>'+available.map(r=>`<option value="${r.id}">${r.id} · เขต ${r.zone}</option>`).join('');el.value=available.some(r=>r.id===old)?old:'all'}
 function filter(){const query=$('#search').value.trim().toLowerCase(),type=$('#typeFilter').value,zone=$('#zoneFilter').value,status=$('#statusFilter').value,vehicle=$('#vehicleFilter').value;return raw.filter(r=>(type==='all'||type===r.type)&&(zone==='all'||zone===String(r.zone))&&(vehicle==='all'||vehicle===r.id)&&(status==='all'||status===r.status||status==='urgent'&&r.stopDays>=3)&&(!query||[r.id,r.reason,r.follow,String(r.zone)].some(v=>v.toLowerCase().includes(query)))).sort((a,b)=>(b.status==='stop')-(a.status==='stop')||b.stopDays-a.stopDays||a.id.localeCompare(b.id))}
-function renderTable(){const arr=filter();$('#resultCount').textContent=`พบ ${arr.length} จาก 24 คัน`;$('#tableBody').innerHTML=arr.map(r=>`<tr><td><b>${r.id}</b></td><td>${r.type==='C'?'บริษัท':r.type==='Q'?'ชาวไร่':'ผู้รับเหมา'} <span class="muted">· ${r.zone}</span></td><td><span class="tag ${r.status}">${label[r.status]}</span></td><td>${r.stopDays?`<b style="color:#cd4550">${r.stopDays} วัน</b>`:'–'}</td><td>${fmt(r.tons)} ตัน</td><td class="reason" title="${safe(r.reason+' / '+r.follow)}">${r.status==='stop'?safe(r.reason)+'<br><small class="muted">'+safe(r.follow)+'</small>':'<span class="muted">–</span>'}</td><td>${r.status==='stop'?`<button class="action-link" data-id="${r.id}">บันทึกสาเหตุ</button>`:'<span class="muted">–</span>'}</td></tr>`).join('')||'<tr><td colspan="7" class="empty">ไม่พบรถตามเงื่อนไขที่เลือก</td></tr>'}
-function renderCalendar(){const dates=[];for(let j=13;j>=0;j--){let dt=new Date(2026,9,29-j);dates.push(dt.getDate()+' ต.ค.')}$('#calHead').innerHTML='<tr><th>รหัสรถ</th>'+dates.map((x,i)=>`<th${i===13?' style="color:#117d9f"':''}>${x}</th>`).join('')+'</tr>';$('#calBody').innerHTML=filter().map(r=>'<tr><td><b>'+r.id+'</b></td>'+r.hist.map((v,k)=>`<td><span class="cell ${v}" title="${dates[k]} · ${label[v]}" aria-label="${dates[k]} ${label[v]}">${v==='weigh'?'✓':v==='queue'?'ค':'–'}</span></td>`).join('')+'</tr>').join('')||'<tr><td colspan="15">ไม่มีข้อมูล</td></tr>'}
+function renderTable(){const arr=filter();$('#resultCount').textContent=`พบ ${arr.length} จาก 24 คัน`;$('#tableBody').innerHTML=arr.map(r=>`<tr class="fleet-row fleet-${r.status}"><td><b class="vehicle-id">${r.id}</b></td><td>${r.type==='C'?'บริษัท':r.type==='Q'?'ชาวไร่':'ผู้รับเหมา'} <span class="muted">· ${r.zone}</span></td><td><span class="tag ${r.status}">${label[r.status]}</span></td><td>${r.stopDays?`<b class="stop-count">${r.stopDays} วัน</b>`:'–'}</td><td><span class="ton-number">${fmt(r.tons)}</span><small class="ton-unit">ตัน</small></td><td class="reason" title="${safe(r.reason+' / '+r.follow)}">${r.status==='stop'?safe(r.reason)+'<br><small class="muted">'+safe(r.follow)+'</small>':'<span class="muted">–</span>'}</td><td>${r.status==='stop'?`<button class="action-link" data-id="${r.id}">บันทึกสาเหตุ</button>`:'<span class="muted">–</span>'}</td></tr>`).join('')||'<tr><td colspan="7" class="empty">ไม่พบรถตามเงื่อนไขที่เลือก</td></tr>'}
+function renderCalendar(){const dates=[];for(let j=13;j>=0;j--){let dt=new Date(2026,9,29-j);dates.push(dt.getDate()+' ต.ค.')}$('#calHead').innerHTML='<tr><th>รหัสรถ</th>'+dates.map((x,i)=>`<th${i===13?' class="latest-date"':''}>${x}</th>`).join('')+'</tr>';$('#calBody').innerHTML=filter().map(r=>'<tr><td><b>'+r.id+'</b></td>'+r.hist.map((v,k)=>`<td class="${k===13?'latest-day':''}"><span class="cell ${v}" title="${dates[k]} · ${label[v]}" aria-label="${dates[k]} ${label[v]}">${v==='weigh'?'✓':v==='queue'?'ค':'–'}</span></td>`).join('')+'</tr>').join('')||'<tr><td colspan="15">ไม่มีข้อมูล</td></tr>'}
 function rerender(){renderKpis();renderUrgent();renderTypes();renderTable();renderCalendar()}
 function toast(s){const el=$('#toast');el.textContent=s;el.style.display='block';setTimeout(()=>el.style.display='none',2700)}
 function openModal(id){const r=raw.find(x=>x.id===id);if(!r)return;editId=id;$('#modalVehicle').textContent=`รถ ${r.id} · เขต ${r.zone} · หยุด ${r.stopDays} วันต่อเนื่อง`;$('#reasonSelect').value=r.reason==='ยังไม่สอบถาม'?'':r.reason;$('#followSelect').value=r.follow;$('#noteInput').value=r.note||'';$('#reasonDialog').showModal()}
