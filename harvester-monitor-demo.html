@@ -456,12 +456,12 @@ function renderClosingSummary(){
   panel.hidden=!afterClose;
   if(!afterClose){panel.innerHTML='';return}
   const p=pulseStats(filter());
-  const movement=p.delta>0?'เพิ่มขึ้น '+p.delta+' คัน':p.delta<0?'ลดลง '+Math.abs(p.delta)+' คัน':'เท่ากับเมื่อวาน';
+  const movement=p.delta>0?'เพิ่มขึ้น '+p.delta+' คันจากเมื่อวาน':p.delta<0?'ลดลง '+Math.abs(p.delta)+' คันจากเมื่อวาน':'เท่ากับเมื่อวาน';
   const tone=p.delta>0?'rise':p.delta<0?'fall':'steady';
   const isReportDay=parts.year==='2026'&&parts.month==='10'&&parts.day==='29';
   const dateNote=isReportDay?'ข้อมูลจำลอง ณ 29 ต.ค. 2569':'ข้อมูลย้อนหลังจำลอง ณ 29 ต.ค. 2569';
   panel.className='closing-summary glass '+tone;
-  panel.innerHTML=`<div class="closing-summary-label"><span class="closing-led" aria-hidden="true"></span><span>สรุปหลังปิดยอด 18:00 น.</span><small>${dateNote}</small></div><p>รถหยุดตัด <strong>${p.stop} คัน</strong> <span class="closing-change">${movement}</span> จากเมื่อวาน</p>`;
+  panel.innerHTML=`<div class="closing-summary-label"><span class="closing-led" aria-hidden="true"></span><span>สรุปหลังปิดยอด 18:00 น.</span><small>${dateNote}</small></div><p>รถหยุดตัด <strong>${p.stop} คัน</strong> <span class="closing-change">${movement}</span></p>`;
 }
 function pulseMarkup(title,value,note,tone){return `<div class="pulse-card ${tone||''}"><div class="pulse-label">${title}</div><div class="pulse-value"><strong>${value}</strong><small>${note}</small></div></div>`}
 function renderPulse(){const arr=filter(),p=pulseStats(arr);const deltaLabel=p.delta>0?'+'+p.delta:String(p.delta);$('#pulseMini').innerHTML=pulseMarkup('หยุดเพิ่ม / ลดจากเมื่อวาน',deltaLabel,'คัน',p.delta>0?'warning':'good')+pulseMarkup('เพิ่งหยุดวันนี้',p.justStopped.length,'คัน',p.justStopped.length?'warning':'')+pulseMarkup('กลับมาทำงาน',p.resumed.length,'คัน','good');$('#dailyPulseCards').innerHTML=pulseMarkup('หยุดตัดวันนี้',p.stop,'คัน','warning')+pulseMarkup('หยุดเมื่อวาน',p.previous,'คัน','')+pulseMarkup('ผลต่างวันต่อวัน',deltaLabel,'คัน',p.delta>0?'warning':'good')+pulseMarkup('เพิ่งหยุด',p.justStopped.length,'คัน','warning')+pulseMarkup('กลับมาทำงาน',p.resumed.length,'คัน','good')+pulseMarkup('รถในตัวกรอง',arr.length,'คัน','');const list=(items)=>items.map(r=>`<div class="mini-row"><div><b>${r.id}</b><small>เขต ${r.zone} · ${label[r.status]}</small></div><span class="pill ${r.status==='stop'?'red':'green'}">${r.status==='stop'?'หยุดตัด':'กลับมาทำงาน'}</span></div>`).join('')||'<div class="empty">ไม่มีรายการเปลี่ยนสถานะ</div>';$('#newStopCount').textContent=p.justStopped.length+' คัน';$('#resumedCount').textContent=p.resumed.length+' คัน';$('#newStopList').innerHTML=list(p.justStopped);$('#resumedList').innerHTML=list(p.resumed)}
