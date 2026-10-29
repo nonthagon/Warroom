@@ -159,28 +159,145 @@ body:before,body:after{display:none}.wrap{max-width:1500px;padding-top:28px}
 @media(max-width:670px){.table-scroller table{min-width:855px;padding:5px}.table-scroller tbody tr td{padding:12px 11px}.calendar{min-width:970px}.cell{width:28px;height:26px}.calendar tbody td{padding:7px 4px}}
 @media(prefers-reduced-motion:reduce){.table-scroller tbody tr,.calendar .cell,.action-link{transition:none}.table-scroller tbody tr:hover,.calendar tbody tr:hover .cell,.action-link:hover{transform:none}}
 
+
+/* EXECUTIVE NAVIGATION — responsive left sidebar and focused views */
+.wrap{max-width:1640px;padding-top:20px}
+.app-shell{display:grid;grid-template-columns:228px minmax(0,1fr);align-items:start;gap:20px}
+.war-main{min-width:0}
+.war-sidebar{position:sticky;top:18px;padding:19px 13px 16px;min-height:calc(100vh - 50px);border-radius:20px;background:linear-gradient(152deg,rgba(255,255,255,.97),rgba(240,250,255,.92));box-shadow:0 17px 38px rgba(38,102,143,.07);display:flex;flex-direction:column;z-index:10}
+.side-head{padding:11px 13px 20px;border-bottom:1px solid #e1edf4;margin-bottom:15px;display:flex;flex-direction:column}
+.side-kicker{color:#3094b8;letter-spacing:2px;font-weight:900;font-size:10px;margin-bottom:7px}
+.side-head strong{color:#20475f;font-size:16px;line-height:1.4}
+.side-head small{font-size:9px;letter-spacing:1.15px;color:#91a9b9;margin-top:5px}
+.side-nav{display:flex;flex-direction:column;gap:5px}
+.side-link{width:100%;display:flex;align-items:center;gap:11px;text-align:left;border:1px solid transparent;padding:12px 11px;border-radius:12px;background:transparent;color:#5d7d91;font-weight:750;font-size:12px;cursor:pointer;transition:background .18s ease,box-shadow .18s ease,transform .18s ease,color .18s ease;font-family:inherit}
+.side-link svg{width:19px;height:19px;flex:0 0 19px;opacity:.83}
+.side-link span:nth-child(2){flex:1}
+.side-link:hover{background:#f0f9fe;color:#286c91;transform:translateX(2px)}
+.side-link.active{color:#0d709e;background:linear-gradient(110deg,#ecf9ff,#e3f4fd);border-color:#cce6f5;box-shadow:0 5px 12px rgba(39,131,170,.09),inset 0 1px 0 #fff}
+.side-link.active svg{opacity:1;filter:drop-shadow(0 1px 2px #6ab5db66)}
+.sidebar-counter{display:inline-flex;min-width:24px;height:22px;padding:0 6px;border-radius:7px;background:#fff0f0;color:#bb5c66;align-items:center;justify-content:center;font-size:10px;font-weight:850}
+.side-bottom{display:flex;align-items:center;gap:8px;margin-top:auto;padding:18px 12px 4px;font-size:10px;color:#8ba3b3}
+.online-indicator{width:7px;height:7px;border-radius:50%;background:#2ab499;box-shadow:0 0 8px #56d7ad}
+.mobile-menu{display:none;flex:0 0 auto;width:40px;height:40px;align-items:center;justify-content:center;background:linear-gradient(145deg,#fff,#edf9fe);border:1px solid #d4e7f1;border-radius:11px;color:#236b91;font-size:20px;cursor:pointer}
+.sidebar-backdrop{display:none}
+.view-pane[hidden]{display:none!important}
+.view-pane{animation:panelSlide .24s ease both}
+@keyframes panelSlide{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.section-intro{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px}
+.section-intro h3{font-size:17px;color:#214b65;margin:0}
+.pulse-mini,.pulse-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.pulse-card{padding:15px 18px;border:1px solid #dbeaf4;border-radius:15px;background:linear-gradient(145deg,#fff,#f2faff);box-shadow:0 9px 22px rgba(39,113,153,.055);position:relative;overflow:hidden}
+.pulse-card:before{content:"";position:absolute;top:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,#8dceea,transparent)}
+.pulse-label{color:#67849a;font-size:11px;font-weight:750}
+.pulse-value{display:flex;align-items:baseline;gap:7px;margin-top:7px}
+.pulse-value strong{font-size:27px;color:#215672;line-height:1;font-weight:850}
+.pulse-value small{font-size:10px;color:#8ca2b1}
+.pulse-card.warning .pulse-value strong{color:#c36470}
+.pulse-card.good .pulse-value strong{color:#268778}
+.pulse-card.amber .pulse-value strong{color:#a4782b}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.trend-scroller{overflow-x:auto;padding:12px 2px 4px;scrollbar-width:thin;scrollbar-color:#c3dfeb transparent}
+.trend-bars{display:flex;align-items:end;gap:8px;min-width:570px;height:195px;padding:14px 6px 0}
+.trend-item{flex:1;min-width:30px;display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;gap:7px}
+.trend-stack{width:100%;height:145px;display:flex;flex-direction:column;border-radius:7px 7px 5px 5px;overflow:hidden;background:#eff5f9;border:1px solid #dbe9f1;box-shadow:0 4px 10px #1e789b15;position:relative}
+.trend-stack span{display:block;width:100%;flex-shrink:0;box-shadow:inset 0 1px 1px #ffffff75}
+.trend-weigh{background:linear-gradient(90deg,#35cbaa,#0ea586)}
+.trend-queue{background:linear-gradient(90deg,#f3d289,#e1a947)}
+.trend-stop{background:linear-gradient(90deg,#f29ca8,#e2687a)}
+.trend-label{font-size:10px;color:#678399;white-space:nowrap}
+.trend-item.today .trend-stack{outline:2px solid #80c9e5;outline-offset:2px}
+.mini-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid #edf2f7}
+.mini-row:last-child{border:0}
+.mini-row b{font-size:12px;color:#24516c}
+.mini-row small{display:block;margin-top:4px;font-size:10px;color:#7690a3}
+.follow-list{display:grid;gap:10px}
+.follow-item{display:grid;grid-template-columns:70px minmax(0,1.2fr) minmax(0,1.2fr) auto;gap:14px;align-items:center;padding:14px 16px;border:1px solid #e1edf5;border-radius:13px;background:linear-gradient(140deg,#fff,#f8fcff);box-shadow:0 5px 12px #1a83ac0a}
+.follow-item.is-urgent{border-left:3px solid #e88b95}
+.follow-item strong{font-size:13px;color:#234c67}
+.follow-item small{display:block;font-size:10px;color:#7c95a5;margin-top:4px}
+.follow-days{font-size:19px;font-weight:850;color:#bc6570}
+.follow-item .rowaction{justify-self:end}
+.zone-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.zone-card{padding:22px;border:1px solid #dcebf4;border-radius:18px;background:linear-gradient(145deg,#fff,#f2faff);box-shadow:0 13px 25px rgba(38,108,148,.08)}
+.zone-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.zone-top h4{margin:0;font-size:17px;color:#225777}
+.zone-count{color:#63869c;font-size:11px;font-weight:750}
+.zone-numbers{display:flex;gap:18px;flex-wrap:wrap;margin:17px 0 14px}
+.zone-numbers div{display:flex;flex-direction:column;gap:3px}
+.zone-numbers strong{font-size:24px;font-weight:850;color:#265b76}
+.zone-numbers small{font-size:10px;color:#7895a8}
+.zone-numbers .danger strong{color:#c66c77}
+.zone-bar{display:flex;overflow:hidden;height:13px;border-radius:7px;background:#ecf2f7;box-shadow:inset 0 1px 3px #153e5a12}
+.zone-bar span{height:100%;display:block}
+.zone-bar .good{background:linear-gradient(180deg,#9ff4dc,#23b79a)}
+.zone-bar .queue{background:linear-gradient(180deg,#ffebb6,#e7b75f)}
+.zone-bar .stop{background:linear-gradient(180deg,#ffc5ca,#e67d8c)}
+.zone-action{margin-top:16px;background:#e9f6fd;border:1px solid #cce7f5;color:#197a9f;font-family:inherit;font-size:11px;font-weight:800;padding:9px 12px;border-radius:9px;cursor:pointer}
+.zone-action:hover{background:#dff2fc}
+@media(max-width:1170px){.app-shell{grid-template-columns:198px minmax(0,1fr);gap:14px}.side-link{font-size:11px;gap:9px;padding:11px 8px}.war-sidebar{padding:14px 9px}.pulse-mini,.pulse-stat-grid{gap:9px}}
+@media(max-width:900px){
+.app-shell{display:block}
+.mobile-menu{display:inline-flex}
+.war-sidebar{position:fixed;z-index:102;inset:0 auto 0 0;height:100dvh;width:min(285px,82vw);min-height:0;border-radius:0 21px 21px 0;transform:translateX(-110%);transition:transform .23s ease;box-shadow:0 15px 80px rgba(18,61,94,.21);padding:23px 15px}
+body.nav-open .war-sidebar{transform:translateX(0)}
+body.nav-open{overflow:hidden}
+.sidebar-backdrop:not([hidden]){display:block;position:fixed;inset:0;z-index:101;background:rgba(18,53,78,.27);backdrop-filter:blur(2px)}
+}
+@media(max-width:680px){
+.pulse-mini,.pulse-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.pulse-card{padding:13px 12px}.pulse-value strong{font-size:23px}
+.twocol,.zone-cards{grid-template-columns:1fr;gap:12px}
+.follow-item{grid-template-columns:55px minmax(0,1fr) auto;gap:8px;padding:12px}
+.follow-item .follow-reason{grid-column:2/4}.follow-item .rowaction{grid-column:3;grid-row:1}
+.follow-days{font-size:16px}
+.war-main header{gap:9px}
+.war-main .header-right{margin-left:auto}
+.section-intro h3{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){.view-pane{animation:none}.side-link,.war-sidebar{transition:none}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><div class="brand"><div class="logo">W</div><div><h1>WARROOM</h1><small>ระบบติดตามการทำงานรถตัดอ้อย</small></div></div><div class="header-right"><span class="source-note">ข้อมูลจำลอง</span><div class="meta"><strong>29 ต.ค. 2569</strong>ปิดยอด 18:00 น.</div></div></header>
+<div class="app-shell"><aside class="war-sidebar glass" id="warSidebar" aria-label="เมนู WARROOM"><div class="side-head"><span class="side-kicker">WARROOM</span><strong>เมนูการติดตาม</strong><small>HARVEST CONTROL</small></div><nav class="side-nav" aria-label="ส่วนต่าง ๆ ของแดชบอร์ด"><button type="button" class="side-link active" data-view-target="overview" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg><span>ภาพรวมทั้งระบบ</span></button><button type="button" class="side-link" data-view-target="today" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" aria-hidden="true"><path d="M3 18h4l3-7 4 3 3-8 4 3"/><path d="M3 21h18"/></svg><span>ความเคลื่อนไหววันนี้</span></button><button type="button" class="side-link" data-view-target="follow" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" aria-hidden="true"><path d="M12 3 2.6 19.4A1.2 1.2 0 0 0 3.6 21h16.8a1.2 1.2 0 0 0 1-1.6L12 3z"/><path d="M12 9v5M12 17.3h.01"/></svg><span>ติดตามเร่งด่วน</span><span class="sidebar-counter" id="sideUrgentCount">0</span></button><button type="button" class="side-link" data-view-target="zones" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15m6-12v15"/></svg><span>ภาพรวมรายเขต</span></button><button type="button" class="side-link" data-view-target="fleet" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11M8 14h13"/></svg><span>รถตัดรายคัน</span></button><button type="button" class="side-link" data-view-target="calendar" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h2M14 14h2M8 18h2"/></svg><span>ปฏิทินรายวัน</span></button></nav><div class="side-bottom"><span class="online-indicator"></span><span>ข้อมูล ณ 29 ต.ค. 2569</span></div></aside><div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div><main class="war-main">
+<header><button type="button" class="mobile-menu" id="mobileMenu" aria-expanded="false" aria-controls="warSidebar" aria-label="เปิดเมนู"><span>☰</span></button><div class="brand"><div class="logo">W</div><div><h1>WARROOM</h1><small>ระบบติดตามการทำงานรถตัดอ้อย</small></div></div><div class="header-right"><span class="source-note">ข้อมูลจำลอง</span><div class="meta"><strong>29 ต.ค. 2569</strong>ปิดยอด 18:00 น.</div></div></header>
 
-<section class="hero glass"><div><h2>ภาพรวมการทำงานรถตัดอ้อย</h2></div><div class="hero-actions"><button class="button primary" onclick="document.querySelector('#daily').scrollIntoView({behavior:'smooth'})">สถานะรายวัน</button><button class="button" id="exportCsv">ส่งออก CSV</button></div></section>
+<section class="hero glass"><div><h2 id="viewTitle">ภาพรวมการทำงานรถตัดอ้อย</h2></div><div class="hero-actions"><button class="button primary" id="quickCalendar">สถานะรายวัน</button><button class="button" id="exportCsv">ส่งออก CSV</button></div></section>
 <section class="panel glass filter-panel" aria-label="ตัวกรอง"><div class="filter-heading">เลือกข้อมูล</div><div class="filters">
 <select id="zoneFilter" aria-label="เลือกเขต"><option value="all">ทุกเขต</option><option value="1">เขต 1</option><option value="2">เขต 2</option><option value="3">เขต 3</option><option value="4">เขต 4</option></select>
 <select id="typeFilter" aria-label="เลือกประเภทรถ"><option value="all">ทุกประเภท</option><option value="C">C · รถบริษัท</option><option value="Q">Q · รถชาวไร่</option><option value="S">S · รถผู้รับเหมา</option></select>
 <select id="vehicleFilter" aria-label="เลือกรหัสรถ"><option value="all">รถทุกคัน</option></select>
 <select id="statusFilter" aria-label="เลือกสถานะ"><option value="all">ทุกสถานะ</option><option value="stop">หยุดตัด</option><option value="urgent">หยุด ≥ 3 วัน</option><option value="queue">มีคิว</option><option value="weigh">ชั่งแล้ว</option></select>
 <input class="input" type="search" id="search" placeholder="ค้นหารหัสรถ…" aria-label="ค้นหารหัสรถ"></div></section>
-<section class="kpis" id="kpis" aria-label="ตัวเลขภาพรวม"></section>
+<div class="view-pane is-active" id="view-overview" data-view="overview"><section class="kpis" id="kpis" aria-label="ตัวเลขภาพรวม"></section><div id="pulseMini" class="pulse-mini" aria-label="ความเคลื่อนไหววันนี้"></div>
 <div class="grid">
 <section class="panel glass"><div class="panel-head"><div><h3>รถตัดที่ต้องติดตามก่อน</h3></div><span class="pill red" id="urgentBadge">หยุด ≥ 3 วัน</span></div><div class="urgent-list" id="urgents"></div></section>
 <section class="panel glass"><div class="panel-head"><div><h3>สถานะตามประเภทรถตัด</h3></div><span class="pill blue" id="typeCount">24 คัน</span></div><div class="type-stack" id="types"></div><div class="legend"><span><i class="dot" style="background:#20a78b"></i>ชั่งแล้ว</span><span><i class="dot" style="background:#e9b557"></i>มีคิว</span><span><i class="dot" style="background:#ee8c94"></i>หยุดตัด</span></div></section>
-</div>
-<section class="panel glass" style="margin-bottom:20px"><div class="panel-head"><h3>รถตัดรายคัน</h3><span class="pill blue" id="resultCount"></span></div><div class="table-scroller"><table><thead><tr><th>รหัสรถ</th><th>ประเภท / เขต</th><th>สถานะวันนี้</th><th>หยุดต่อเนื่อง</th><th>ตัน (14 วัน)</th><th>สาเหตุ / การติดตาม</th><th>ดำเนินการ</th></tr></thead><tbody id="tableBody"></tbody></table></div></section>
-<section class="panel glass" id="daily"><div class="panel-head"><div><h3>ปฏิทินการตัดรายวัน</h3></div><span class="pill green">● ชั่งแล้ว &nbsp; ● มีคิว &nbsp; ● หยุด</span></div><div class="timeline"><table class="calendar"><thead id="calHead"></thead><tbody id="calBody"></tbody></table></div></section>
 
 </div>
+<div class="view-pane" id="view-today" data-view="today" hidden>
+  <div class="section-intro"><h3>ความเคลื่อนไหววันนี้</h3><span class="pill blue">เทียบกับ 28 ต.ค. 2569</span></div>
+  <div class="pulse-stat-grid" id="dailyPulseCards"></div>
+  <section class="panel glass" style="margin-bottom:18px"><div class="panel-head"><h3>สถานะรถตัดย้อนหลัง 14 วัน</h3><span class="pill blue">ชั่งแล้ว / มีคิว / หยุด</span></div><div class="trend-scroller"><div class="trend-bars" id="trendBars"></div></div><div class="legend"><span><i class="dot" style="background:#20a78b"></i>ชั่งแล้ว</span><span><i class="dot" style="background:#e9b557"></i>มีคิว</span><span><i class="dot" style="background:#ee8c94"></i>หยุดตัด</span></div></section>
+  <div class="twocol"><section class="panel glass"><div class="panel-head"><h3>รถที่เพิ่งหยุด</h3><span class="pill red" id="newStopCount"></span></div><div id="newStopList"></div></section><section class="panel glass"><div class="panel-head"><h3>รถที่กลับมาทำงาน</h3><span class="pill green" id="resumedCount"></span></div><div id="resumedList"></div></section></div>
+</div>
+<div class="view-pane" id="view-follow" data-view="follow" hidden>
+  <div class="section-intro"><h3>รถตัดที่ต้องติดตาม</h3><span class="pill red">เรียงตามจำนวนวันที่หยุด</span></div>
+  <div class="pulse-stat-grid" id="followSummary"></div>
+  <section class="panel glass"><div class="panel-head"><h3>รายการติดตามรายคัน</h3><span class="pill blue" id="followCount"></span></div><div class="follow-list" id="followList"></div></section>
+</div>
+<div class="view-pane" id="view-zones" data-view="zones" hidden>
+  <div class="section-intro"><h3>ภาพรวมรายเขต</h3><span class="pill blue">เขต 1 – 4</span></div>
+  <div class="zone-cards" id="zoneCards"></div>
+</div>
+<div class="view-pane" id="view-fleet" data-view="fleet" hidden>
+<section class="panel glass" style="margin-bottom:20px"><div class="panel-head"><h3>รถตัดรายคัน</h3><span class="pill blue" id="resultCount"></span></div><div class="table-scroller"><table><thead><tr><th>รหัสรถ</th><th>ประเภท / เขต</th><th>สถานะวันนี้</th><th>หยุดต่อเนื่อง</th><th>ตัน (14 วัน)</th><th>สาเหตุ / การติดตาม</th><th>ดำเนินการ</th></tr></thead><tbody id="tableBody"></tbody></table></div></section>
+</div><div class="view-pane" id="view-calendar" data-view="calendar" hidden>
+<section class="panel glass" id="daily"><div class="panel-head"><div><h3>ปฏิทินการตัดรายวัน</h3></div><span class="pill green">● ชั่งแล้ว &nbsp; ● มีคิว &nbsp; ● หยุด</span></div><div class="timeline"><table class="calendar"><thead id="calHead"></thead><tbody id="calBody"></tbody></table></div></section>
+
+</div></main></div></div>
 <dialog id="reasonDialog"><form method="dialog" id="reasonForm"><div class="modal-inner"><h3>บันทึกสาเหตุรถหยุดตัด</h3><p id="modalVehicle">รถตัด —</p><label class="field">สาเหตุการหยุด<select id="reasonSelect" required><option value="">เลือกสาเหตุ</option><option>รถเสีย / ซ่อมบำรุง</option><option>ฝนตก / พื้นที่ชื้น</option><option>ไม่มีอ้อยพร้อมตัด</option><option>รอคิว / รถขนส่ง</option><option>ขาดแรงงาน / คนขับ</option><option>อื่น ๆ</option></select></label><label class="field">สถานะการติดตาม<select id="followSelect"><option>ยังไม่ดำเนินการ</option><option>โทรสอบถามแล้ว</option><option>กำลังแก้ไข</option><option>รอกลับมาตัด</option></select></label><label class="field">หมายเหตุ<textarea id="noteInput" placeholder="เช่น แจ้งช่างเข้าแก้ไข คาดว่ากลับมาตัดพรุ่งนี้"></textarea></label><div class="modal-buttons"><button class="button" value="cancel">ยกเลิก</button><button class="button primary" id="saveReason" value="save">บันทึกข้อมูล</button></div></div></form></dialog>
 <div id="toast" class="toast" role="status"></div>
 <script>
@@ -206,14 +323,34 @@ function syncVehicleOptions(){const el=$('#vehicleFilter');const old=el.value;co
 function filter(){const query=$('#search').value.trim().toLowerCase(),type=$('#typeFilter').value,zone=$('#zoneFilter').value,status=$('#statusFilter').value,vehicle=$('#vehicleFilter').value;return raw.filter(r=>(type==='all'||type===r.type)&&(zone==='all'||zone===String(r.zone))&&(vehicle==='all'||vehicle===r.id)&&(status==='all'||status===r.status||status==='urgent'&&r.stopDays>=3)&&(!query||[r.id,r.reason,r.follow,String(r.zone)].some(v=>v.toLowerCase().includes(query)))).sort((a,b)=>(b.status==='stop')-(a.status==='stop')||b.stopDays-a.stopDays||a.id.localeCompare(b.id))}
 function renderTable(){const arr=filter();$('#resultCount').textContent=`พบ ${arr.length} จาก 24 คัน`;$('#tableBody').innerHTML=arr.map(r=>`<tr class="fleet-row fleet-${r.status}"><td><b class="vehicle-id">${r.id}</b></td><td>${r.type==='C'?'บริษัท':r.type==='Q'?'ชาวไร่':'ผู้รับเหมา'} <span class="muted">· ${r.zone}</span></td><td><span class="tag ${r.status}">${label[r.status]}</span></td><td>${r.stopDays?`<b class="stop-count">${r.stopDays} วัน</b>`:'–'}</td><td><span class="ton-number">${fmt(r.tons)}</span><small class="ton-unit">ตัน</small></td><td class="reason" title="${safe(r.reason+' / '+r.follow)}">${r.status==='stop'?safe(r.reason)+'<br><small class="muted">'+safe(r.follow)+'</small>':'<span class="muted">–</span>'}</td><td>${r.status==='stop'?`<button class="action-link" data-id="${r.id}">บันทึกสาเหตุ</button>`:'<span class="muted">–</span>'}</td></tr>`).join('')||'<tr><td colspan="7" class="empty">ไม่พบรถตามเงื่อนไขที่เลือก</td></tr>'}
 function renderCalendar(){const dates=[];for(let j=13;j>=0;j--){let dt=new Date(2026,9,29-j);dates.push(dt.getDate()+' ต.ค.')}$('#calHead').innerHTML='<tr><th>รหัสรถ</th>'+dates.map((x,i)=>`<th${i===13?' class="latest-date"':''}>${x}</th>`).join('')+'</tr>';$('#calBody').innerHTML=filter().map(r=>'<tr><td><b>'+r.id+'</b></td>'+r.hist.map((v,k)=>`<td class="${k===13?'latest-day':''}"><span class="cell ${v}" title="${dates[k]} · ${label[v]}" aria-label="${dates[k]} ${label[v]}">${v==='weigh'?'✓':v==='queue'?'ค':'–'}</span></td>`).join('')+'</tr>').join('')||'<tr><td colspan="15">ไม่มีข้อมูล</td></tr>'}
-function rerender(){renderKpis();renderUrgent();renderTypes();renderTable();renderCalendar()}
+
+const VIEW_TITLES={overview:'ภาพรวมการทำงานรถตัดอ้อย',today:'ความเคลื่อนไหวรายวัน',follow:'ติดตามรถตัดเร่งด่วน',zones:'วิเคราะห์ผลการทำงานรายเขต',fleet:'ข้อมูลรถตัดรายคัน',calendar:'ปฏิทินการตัดรายวัน'};
+let currentView='overview';
+function setMenuOpen(open){document.body.classList.toggle('nav-open',open);$('#sidebarBackdrop').hidden=!open;$('#mobileMenu').setAttribute('aria-expanded',String(open))}
+function activateView(view){if(!VIEW_TITLES[view])view='overview';currentView=view;document.querySelectorAll('.view-pane').forEach(p=>{const show=p.dataset.view===view;p.hidden=!show;p.classList.toggle('is-active',show)});document.querySelectorAll('.side-link').forEach(b=>{const on=b.dataset.viewTarget===view;b.classList.toggle('active',on);b.setAttribute('aria-current',on?'page':'false')});$('#viewTitle').textContent=VIEW_TITLES[view];$('#quickCalendar').textContent=view==='calendar'?'ดูรถรายคัน':'ปฏิทินรายวัน';setMenuOpen(false);window.scrollTo({top:0,behavior:'instant'});try{history.replaceState(null,'','#'+view)}catch(e){}}
+function pulseStats(arr){const prev=arr.filter(r=>r.hist[r.hist.length-2]==='stop');const stop=arr.filter(r=>r.status==='stop');const justStopped=arr.filter(r=>r.hist[r.hist.length-2]!=='stop'&&r.status==='stop');const resumed=arr.filter(r=>r.hist[r.hist.length-2]==='stop'&&r.status!=='stop');return {stop:stop.length,previous:prev.length,delta:stop.length-prev.length,justStopped,resumed}}
+function pulseMarkup(title,value,note,tone){return `<div class="pulse-card ${tone||''}"><div class="pulse-label">${title}</div><div class="pulse-value"><strong>${value}</strong><small>${note}</small></div></div>`}
+function renderPulse(){const arr=filter(),p=pulseStats(arr);const deltaLabel=p.delta>0?'+'+p.delta:String(p.delta);$('#pulseMini').innerHTML=pulseMarkup('หยุดเพิ่ม / ลดจากเมื่อวาน',deltaLabel,'คัน',p.delta>0?'warning':'good')+pulseMarkup('เพิ่งหยุดวันนี้',p.justStopped.length,'คัน',p.justStopped.length?'warning':'')+pulseMarkup('กลับมาทำงาน',p.resumed.length,'คัน','good');$('#dailyPulseCards').innerHTML=pulseMarkup('หยุดตัดวันนี้',p.stop,'คัน','warning')+pulseMarkup('หยุดเมื่อวาน',p.previous,'คัน','')+pulseMarkup('ผลต่างวันต่อวัน',deltaLabel,'คัน',p.delta>0?'warning':'good')+pulseMarkup('เพิ่งหยุด',p.justStopped.length,'คัน','warning')+pulseMarkup('กลับมาทำงาน',p.resumed.length,'คัน','good')+pulseMarkup('รถในตัวกรอง',arr.length,'คัน','');const list=(items)=>items.map(r=>`<div class="mini-row"><div><b>${r.id}</b><small>เขต ${r.zone} · ${label[r.status]}</small></div><span class="pill ${r.status==='stop'?'red':'green'}">${r.status==='stop'?'หยุดตัด':'กลับมาทำงาน'}</span></div>`).join('')||'<div class="empty">ไม่มีรายการเปลี่ยนสถานะ</div>';$('#newStopCount').textContent=p.justStopped.length+' คัน';$('#resumedCount').textContent=p.resumed.length+' คัน';$('#newStopList').innerHTML=list(p.justStopped);$('#resumedList').innerHTML=list(p.resumed)}
+function renderTrend(){const arr=filter();$('#trendBars').innerHTML=Array.from({length:14},(_,k)=>{const counts={weigh:0,queue:0,stop:0};arr.forEach(r=>{counts[r.hist[k]]++});const total=Math.max(arr.length,1),day=new Date(2026,9,16+k).getDate();return `<div class="trend-item ${k===13?'today':''}" title="${day} ต.ค. · ชั่งแล้ว ${counts.weigh} / มีคิว ${counts.queue} / หยุด ${counts.stop}"><div class="trend-stack"><span class="trend-weigh" style="height:${counts.weigh/total*100}%"></span><span class="trend-queue" style="height:${counts.queue/total*100}%"></span><span class="trend-stop" style="height:${counts.stop/total*100}%"></span></div><span class="trend-label">${day} ต.ค.</span></div>`}).join('')}
+function renderFollow(){const arr=filter().filter(r=>r.status==='stop').sort((a,b)=>b.stopDays-a.stopDays);const unknown=arr.filter(r=>r.reason==='ยังไม่สอบถาม');const contacted=arr.filter(r=>r.follow!=='ยังไม่ดำเนินการ');const long=arr.filter(r=>r.stopDays>=3);$('#sideUrgentCount').textContent=long.length;$('#followSummary').innerHTML=pulseMarkup('หยุด ≥ 3 วัน',long.length,'คัน','warning')+pulseMarkup('ยังไม่ทราบสาเหตุ',unknown.length,'คัน','amber')+pulseMarkup('มีการติดตามแล้ว',contacted.length,'คัน','good');$('#followCount').textContent=arr.length+' คัน';$('#followList').innerHTML=arr.map(r=>`<div class="follow-item ${r.stopDays>=3?'is-urgent':''}"><span class="follow-days">${r.stopDays}<small>วันหยุด</small></span><div><strong>${r.id}</strong><small>เขต ${r.zone} · ${r.type==='C'?'บริษัท':r.type==='Q'?'ชาวไร่':'ผู้รับเหมา'}</small></div><div class="follow-reason"><strong>${safe(r.reason)}</strong><small>${safe(r.follow)}</small></div><button type="button" class="rowaction" data-id="${r.id}">ติดตาม ›</button></div>`).join('')||'<div class="empty">ไม่มีรถหยุดตัดตามเงื่อนไขที่เลือก</div>'}
+function renderZones(){const selected=filter();const zoneFilter=$('#zoneFilter').value;$('#zoneCards').innerHTML=[1,2,3,4].filter(z=>zoneFilter==='all'||Number(zoneFilter)===z).map(z=>{const arr=selected.filter(r=>r.zone===z),total=arr.length,w=arr.filter(r=>r.status==='weigh').length,q=arr.filter(r=>r.status==='queue').length,st=arr.filter(r=>r.status==='stop').length,urgent=arr.filter(r=>r.stopDays>=3).length,t=Math.max(total,1);return `<section class="zone-card"><div class="zone-top"><h4>เขต ${z}</h4><span class="zone-count">รถ ${total} คัน</span></div><div class="zone-numbers"><div><strong>${w+q}</strong><small>ทำงาน</small></div><div class="danger"><strong>${st}</strong><small>หยุดตัด</small></div><div><strong>${urgent}</strong><small>หยุด ≥ 3 วัน</small></div></div><div class="zone-bar"><span class="good" style="width:${w/t*100}%"></span><span class="queue" style="width:${q/t*100}%"></span><span class="stop" style="width:${st/t*100}%"></span></div><button type="button" class="zone-action" data-go-zone="${z}">ดูรถในเขต ${z} ›</button></section>`}).join('')}
+
+function rerender(){renderKpis();renderUrgent();renderTypes();renderTable();renderCalendar();renderPulse();renderTrend();renderFollow();renderZones()}
 function toast(s){const el=$('#toast');el.textContent=s;el.style.display='block';setTimeout(()=>el.style.display='none',2700)}
 function openModal(id){const r=raw.find(x=>x.id===id);if(!r)return;editId=id;$('#modalVehicle').textContent=`รถ ${r.id} · เขต ${r.zone} · หยุด ${r.stopDays} วันต่อเนื่อง`;$('#reasonSelect').value=r.reason==='ยังไม่สอบถาม'?'':r.reason;$('#followSelect').value=r.follow;$('#noteInput').value=r.note||'';$('#reasonDialog').showModal()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(b)openModal(b.dataset.id)});
 $('#saveReason').addEventListener('click',e=>{if(!$('#reasonSelect').value){e.preventDefault();$('#reasonSelect').reportValidity();return}let r=raw.find(x=>x.id===editId);if(!r)return;r.reason=$('#reasonSelect').value;r.follow=$('#followSelect').value;r.note=$('#noteInput').value;const notes={};raw.filter(r=>r.status==='stop').forEach(r=>notes[r.id]={reason:r.reason,follow:r.follow,note:r.note});try{localStorage.setItem(KEY,JSON.stringify(notes))}catch(e){}rerender();toast('บันทึกข้อมูลตัวอย่างแล้ว (เฉพาะอุปกรณ์นี้)')});
 ['search','typeFilter','zoneFilter','statusFilter','vehicleFilter'].forEach(id=>$('#'+id).addEventListener(id==='search'?'input':'change',()=>{if(id==='zoneFilter'||id==='typeFilter')syncVehicleOptions();rerender()}));
 $('#exportCsv').addEventListener('click',()=>{let arr=filter();let lines=[['รหัสรถ','ประเภท','เขต','สถานะ','หยุดต่อเนื่อง(วัน)','ตัน14วัน','สาเหตุ','สถานะติดตาม','หมายเหตุ'],...arr.map(r=>[r.id,r.type,r.zone,label[r.status],r.stopDays,r.tons,r.reason,r.follow,r.note])];let csv='\uFEFF'+lines.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');let url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));let a=document.createElement('a');a.href=url;a.download='WARROOM_รถตัด_ตัวอย่าง.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500)});
-syncVehicleOptions();rerender();
+
+document.querySelectorAll('[data-view-target]').forEach(b=>b.addEventListener('click',()=>activateView(b.dataset.viewTarget)));
+$('#mobileMenu').addEventListener('click',()=>setMenuOpen(!document.body.classList.contains('nav-open')));
+$('#sidebarBackdrop').addEventListener('click',()=>setMenuOpen(false));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenuOpen(false)});
+$('#quickCalendar').addEventListener('click',()=>activateView(currentView==='calendar'?'fleet':'calendar'));
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go-zone]');if(!b)return;$('#zoneFilter').value=b.dataset.goZone;syncVehicleOptions();rerender();activateView('fleet')});
+
+syncVehicleOptions();rerender();activateView(location.hash.replace('#','')||'overview');
 })();
 </script>
 </body></html>
